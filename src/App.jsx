@@ -602,6 +602,7 @@ function NewsFeed({initialSym='MARKET'}){
   const [ts,setTs]=useState('');
   const [selected,setSelected]=useState(null);
   const [secsSince,setSecsSince]=useState(0);
+  const [stockPrice,setStockPrice]=useState(null);
   const lastFetch=useRef(0);
 
   const nowStr=()=>new Date().toLocaleString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true,day:'numeric',month:'short'})+' IST';
@@ -655,6 +656,15 @@ function NewsFeed({initialSym='MARKET'}){
   },[]);
 
   const openArticle=useCallback(article=>{setSelected(article);},[]);
+
+  // Fetch price when searching a specific stock
+  useEffect(()=>{
+    if(activeSym==='MARKET'){setStockPrice(null);return;}
+    fetch(BACKEND+'/api/price?symbol='+activeSym)
+      .then(r=>r.json())
+      .then(d=>{if(d.price&&d.price!=='N/A')setStockPrice(d);else setStockPrice(null);})
+      .catch(()=>setStockPrice(null));
+  },[activeSym]);
 
   useEffect(()=>{fetchNews();},[fetchNews]);
   useEffect(()=>{const t=setInterval(()=>fetchNews(activeSym),60000);return()=>clearInterval(t);},[fetchNews,activeSym]);
