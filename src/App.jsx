@@ -1038,6 +1038,25 @@ function Compare({dark=true}){
 function Briefing({dark=true}){
   const [data, setData] = useState({indices:[], news:[], loaded:false, error:false});
   const [time, setTime] = useState(new Date());
+  const [stockInput, setStockInput] = useState('');
+  const [stockData, setStockData] = useState(null); // {price, news, loading, sym}
+
+  const searchStock = async(sym) => {
+    if(!sym.trim()) return;
+    const resolved = resolveTicker(sym);
+    setStockData({loading:true, sym:resolved, info:null, news:[]});
+    try {
+      const [infoRes, newsRes] = await Promise.allSettled([
+        fetch(BACKEND+'/api/stockinfo?symbol='+resolved).then(r=>r.json()).catch(()=>null),
+        fetch(BACKEND+'/api/news?symbol='+resolved).then(r=>r.json()).catch(()=>[]),
+      ]);
+      const info = infoRes.status==='fulfilled'?infoRes.value:null;
+      const news = newsRes.status==='fulfilled'&&Array.isArray(newsRes.value)?newsRes.value:[];
+      setStockData({loading:false, sym:resolved, info, news:news.slice(0,5)});
+    } catch {
+      setStockData({loading:false, sym:resolved, info:null, news:[]});
+    }
+  };
 
   useEffect(()=>{const t=setInterval(()=>setTime(new Date()),1000);return()=>clearInterval(t);},[]);
 
@@ -1107,6 +1126,157 @@ function Briefing({dark=true}){
   return (
     <div style={{background:dark?'#07070f':'#f8f8f5',minHeight:'calc(100vh - 44px)',color:dark?'#f0f0f0':'#111',fontFamily:'sans-serif',padding:'28px clamp(16px,4vw,28px)'}}>
       <div style={{maxWidth:720,margin:'0 auto'}}>
+
+        {/* Stock search */}
+        <div style={{marginBottom:28}}>
+          <div style={{fontSize:9,color:'#333',fontFamily:'monospace',letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:10}}>Stock lookup</div>
+          <div style={{display:'flex',gap:8,marginBottom:8}}>
+            <input value={stockInput} onChange={e=>setStockInput(e.target.value.toUpperCase())}
+              onKeyDown={e=>e.key==='Enter'&&searchStock(stockInput)}
+              style={{flex:1,background:dark?'rgba(255,255,255,.06)':'rgba(0,0,0,.05)',border:`1px solid ${dark?'rgba(255,255,255,.1)':'rgba(0,0,0,.1)'}`,borderRadius:8,padding:'10px 14px',fontSize:13,color:dark?'#ddd':'#111',fontFamily:'monospace',outline:'none',WebkitAppearance:'none'}}
+              placeholder="AAPL, RELIANCE, NIFTY..."/>
+            <button onClick={()=>searchStock(stockInput)}
+              style={{fontSize:12,color:dark?'#07070f':'#fff',background:dark?'#ddd':'#111',border:'none',borderRadius:8,padding:'10px 20px',cursor:'pointer',fontWeight:700,WebkitTapHighlightColor:'transparent'}}>
+              Search
+            </button>
+            {stockData&&<button onClick={()=>setStockData(null)}
+              style={{fontSize:11,color:'#444',background:'transparent',border:`1px solid ${dark?'rgba(255,255,255,.08)':'rgba(0,0,0,.08)'}`,borderRadius:8,padding:'10px 14px',cursor:'pointer',fontFamily:'monospace',WebkitTapHighlightColor:'transparent'}}>
+              clear
+            </button>}
+          </div>
+          <div style={{fontSize:10,color:'#2a2a2a',fontFamily:'monospace'}}>
+            US: AAPL, NVDA, TSLA · Indian: RELIANCE, TCS, INFY · Indices: NIFTY, SENSEX
+          </div>
+        </div>
+
+        {/* Stock analysis panel */}
+        {stockData&&(
+          <div style={{background:dark?'#0d0d18':'#ffffff',border:`1px solid ${dark?'rgba(255,255,255,.09)':'rgba(0,0,0,.08)'}`,borderRadius:12,overflow:'hidden',marginBottom:28}}>
+
+            {/* Header */}
+            <div style={{background:dark?'#0a0a14':'#f0f0ec',padding:'14px 18px',borderBottom:`1px solid ${dark?'rgba(255,255,255,.06)':'rgba(0,0,0,.06)'}`,display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:8}}>
+              <div>
+                <div style={{fontSize:9,color:'#444',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:3}}>STOCK ANALYSIS</div>
+                <div style={{fontSize:16,fontWeight:700,color:dark?'#ddd':'#111',fontFamily:'monospace'}}>{stockData.sym}</div>
+                {stockData.info?.name&&stockData.info.name!==stockData.sym&&<div style={{fontSize:11,color:'#555',fontFamily:'monospace',marginTop:2}}>{stockData.info.name}</div>}
+              </div>
+              {stockData.loading&&<div style={{fontSize:11,color:'#444',fontFamily:'monospace',animation:'pulse 1s infinite'}}>loading...</div>}
+              {!stockData.loading&&stockData.info?.signal&&stockData.info.signal!=='N/A'&&(
+                <div style={{textAlign:'right'}}>
+                  <div style={{fontSize:9,color:'#333',fontFamily:'monospace',marginBottom:4}}>SIGNAL</div>
+                  <div style={{fontSize:15,fontWeight:700,fontFamily:'monospace',color:stockData.info.signal==='BUY'?'#22c55e':stockData.info.signal==='SELL'?'#ef4444':'#f59e0b',padding:'4px 12px',background:stockData.info.signal==='BUY'?'rgba(34,197,94,.1)':stockData.info.signal==='SELL'?'rgba(239,68,68,.1)':'rgba(245,158,11,.1)',borderRadius:6,border:`1px solid ${stockData.info.signal==='BUY'?'rgba(34,197,94,.2)':stockData.info.signal==='SELL'?'rgba(239,68,68,.2)':'rgba(245,158,11,.2)'}`}}>{stockData.info.signal}</div>
+                </div>
+              )}
+            </div>
+
+            {!stockData.loading&&stockData.info&&(
+              <>
+                {/* Price + sentiment */}
+                <div style={{padding:'16px 18px',borderBottom:`1px solid ${dark?'rgba(255,255,255,.05)':'rgba(0,0,0,.05)'}`}}>
+                  <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',flexWrap:'wrap',gap:12,marginBottom:12}}>
+                    <div>
+                      <div style={{fontSize:'clamp(26px,5vw,34px)',fontWeight:700,color:dark?'#e8e8e8':'#111',fontFamily:'monospace',lineHeight:1,marginBottom:6}}>
+                        {stockData.info.currentPrice?stockData.info.currentPrice.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):'N/A'}
+                        <span style={{fontSize:11,color:'#444',fontFamily:'monospace',marginLeft:6}}>{stockData.info.currency}</span>
+                      </div>
+                      <div style={{display:'flex',alignItems:'center',gap:8}}>
+                        <span style={{fontSize:14,fontWeight:600,fontFamily:'monospace',color:stockData.info.changePct>=0?'#22c55e':'#ef4444'}}>
+                          {stockData.info.changePct>=0?'+':''}{(stockData.info.changePct*100).toFixed(2)}%
+                        </span>
+                        <span style={{fontSize:12,color:'#444',fontFamily:'monospace'}}>
+                          {stockData.info.change>=0?'+':''}{stockData.info.change?.toFixed(2)} today
+                        </span>
+                      </div>
+                    </div>
+                    {/* Sentiment bar */}
+                    <div style={{minWidth:120}}>
+                      <div style={{fontSize:9,color:'#333',fontFamily:'monospace',marginBottom:6}}>SENTIMENT</div>
+                      <div style={{height:3,background:'rgba(255,255,255,.06)',borderRadius:2,marginBottom:4}}>
+                        <div style={{height:'100%',width:stockData.info.sentimentScore+'%',background:stockData.info.sentimentScore>60?'#22c55e':stockData.info.sentimentScore<40?'#ef4444':'#f59e0b',borderRadius:2}}/>
+                      </div>
+                      <div style={{fontSize:10,color:stockData.info.sentimentScore>60?'#22c55e':stockData.info.sentimentScore<40?'#ef4444':'#f59e0b',fontFamily:'monospace',fontWeight:600}}>{stockData.info.sentiment}</div>
+                    </div>
+                  </div>
+                  {/* Signal reason */}
+                  {stockData.info.signalReason&&<div style={{fontSize:12,color:'#555',fontFamily:'Georgia,serif',lineHeight:1.7,background:dark?'rgba(255,255,255,.02)':'rgba(0,0,0,.02)',borderRadius:6,padding:'10px 12px',borderLeft:`3px solid ${stockData.info.signal==='BUY'?'#22c55e':stockData.info.signal==='SELL'?'#ef4444':'#f59e0b'}`}}>{stockData.info.signalReason}</div>}
+                </div>
+
+                {/* Fundamentals grid */}
+                <div style={{padding:'14px 18px',borderBottom:`1px solid ${dark?'rgba(255,255,255,.05)':'rgba(0,0,0,.05)'}`}}>
+                  <div style={{fontSize:9,color:'#333',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:12}}>KEY STATS</div>
+                  <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(130px,1fr))',gap:12}}>
+                    {[
+                      {label:'Market Cap',   value:stockData.info.marketCap},
+                      {label:'P/E Ratio',    value:stockData.info.peRatio},
+                      {label:'EPS',          value:stockData.info.eps},
+                      {label:'52W High',     value:stockData.info.week52High},
+                      {label:'52W Low',      value:stockData.info.week52Low},
+                      {label:'Volume',       value:stockData.info.volume},
+                      {label:'Avg Volume',   value:stockData.info.avgVolume},
+                      {label:'Beta',         value:stockData.info.beta},
+                      {label:'Dividend',     value:stockData.info.dividendYield},
+                      {label:'Target Price', value:stockData.info.targetPrice},
+                    ].map((s,i)=>(
+                      <div key={i}>
+                        <div style={{fontSize:9,color:'#333',fontFamily:'monospace',marginBottom:3}}>{s.label}</div>
+                        <div style={{fontSize:13,fontWeight:600,color:dark?'#ccc':'#222',fontFamily:'monospace'}}>{s.value||'N/A'}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Bull / Bear */}
+                {(()=>{
+                  const tag = stockData.info.changePct>0.01?'tech':stockData.info.changePct<-0.01?'general':'general';
+                  const sent = stockData.info.sentiment;
+                  const analysis = getArticleAnalysis(stockData.sym+' stock analysis', '', tag, sent);
+                  return(
+                    <div style={{padding:'14px 18px',borderBottom:`1px solid ${dark?'rgba(255,255,255,.05)':'rgba(0,0,0,.05)'}`}}>
+                      <div style={{fontSize:9,color:'#333',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:12}}>ANALYSIS</div>
+                      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:2,marginBottom:12}}>
+                        <div style={{background:'rgba(34,197,94,.04)',border:'1px solid rgba(34,197,94,.1)',borderRadius:8,padding:'12px'}}>
+                          <div style={{fontSize:9,color:'#22c55e',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:8}}>BULL CASE</div>
+                          <p style={{fontSize:11,color:'#555',lineHeight:1.75,margin:0,fontFamily:'Georgia,serif'}}>{analysis.bullCase}</p>
+                        </div>
+                        <div style={{background:'rgba(239,68,68,.04)',border:'1px solid rgba(239,68,68,.1)',borderRadius:8,padding:'12px'}}>
+                          <div style={{fontSize:9,color:'#ef4444',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:8}}>BEAR CASE</div>
+                          <p style={{fontSize:11,color:'#555',lineHeight:1.75,margin:0,fontFamily:'Georgia,serif'}}>{analysis.bearCase}</p>
+                        </div>
+                      </div>
+                      <div style={{background:dark?'rgba(255,255,255,.02)':'rgba(0,0,0,.02)',borderRadius:6,padding:'10px 12px',borderLeft:'3px solid #f59e0b'}}>
+                        <div style={{fontSize:9,color:'#f59e0b',fontFamily:'monospace',marginBottom:5}}>WHAT TO WATCH</div>
+                        <p style={{fontSize:11,color:'#555',lineHeight:1.75,margin:0,fontFamily:'Georgia,serif'}}>{analysis.watchNext}</p>
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {/* News */}
+                <div style={{padding:'14px 18px'}}>
+                  <div style={{fontSize:9,color:'#333',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:12}}>LATEST NEWS</div>
+                  {stockData.news.length===0&&<div style={{fontSize:12,color:'#333',fontFamily:'monospace'}}>no news found</div>}
+                  {stockData.news.map((n,i)=>{
+                    const sent=calcSentiment(n.headline,n.summary,n.source,'general');
+                    return(
+                      <div key={i} style={{paddingBottom:12,marginBottom:12,borderBottom:i<stockData.news.length-1?`1px solid ${dark?'rgba(255,255,255,.04)':'rgba(0,0,0,.05)'}`:' none'}}>
+                        <div style={{fontSize:'clamp(12px,2.5vw,13px)',fontWeight:500,color:dark?'#ccc':'#222',lineHeight:1.5,fontFamily:'Georgia,serif',marginBottom:5}}>{n.headline}</div>
+                        <div style={{display:'flex',alignItems:'center',gap:8}}>
+                          <span style={{fontSize:9,color:'#333',fontFamily:'monospace'}}>{n.source}</span>
+                          <span style={{fontSize:9,color:'#333',fontFamily:'monospace'}}>· {n.time}</span>
+                          <span style={{fontSize:9,color:sent.color,fontFamily:'monospace',marginLeft:'auto',fontWeight:600}}>{sent.label}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div style={{padding:'10px 18px',fontSize:9,color:'#1e1e1e',fontFamily:'monospace'}}>
+                  Analysis is rule-based and general · sentiment is indicative only · not financial advice
+                </div>
+              </>
+            )}
+          </div>
+        )}
 
         {/* Header */}
         <div style={{marginBottom:32}}>
