@@ -12,6 +12,32 @@ const TAG_META = {
   general:{cls:'tg',label:'Markets'},
 };
 
+// ── Ticker auto-conversion — natural names to API symbols ────
+const TICKER_ALIASES = {
+  // Indian indices
+  'NIFTY':'^NSEI','NIFTY50':'^NSEI','NIFTY 50':'^NSEI',
+  'SENSEX':'^BSESN','BSE':'^BSESN',
+  'BANKNIFTY':'^NSEBANK','BANK NIFTY':'^NSEBANK',
+  // Indian stocks — auto add .NS
+  'RELIANCE':'RELIANCE.NS','TCS':'TCS.NS','INFY':'INFY.NS',
+  'INFOSYS':'INFY.NS','HDFCBANK':'HDFCBANK.NS','ICICIBANK':'ICICIBANK.NS',
+  'WIPRO':'WIPRO.NS','BAJFINANCE':'BAJFINANCE.NS','SBIN':'SBIN.NS',
+  'ADANIENT':'ADANIENT.NS','TATAMOTORS':'TATAMOTORS.NS','MARUTI':'MARUTI.NS',
+  'SUNPHARMA':'SUNPHARMA.NS','AXISBANK':'AXISBANK.NS','KOTAKBANK':'KOTAKBANK.NS',
+  'HCLTECH':'HCLTECH.NS','TECHM':'TECHM.NS','TITAN':'TITAN.NS',
+  'NESTLEIND':'NESTLEIND.NS','LTIM':'LTIM.NS','ONGC':'ONGC.NS',
+  'NTPC':'NTPC.NS','POWERGRID':'POWERGRID.NS','ASIANPAINT':'ASIANPAINT.NS',
+  'ULTRACEMCO':'ULTRACEMCO.NS','HINDUNILVR':'HINDUNILVR.NS',
+  // US indices
+  'SP500':'^GSPC','S&P500':'^GSPC','S&P 500':'^GSPC',
+  'DOW':'^DJI','DOWJONES':'^DJI','DOW JONES':'^DJI',
+  'NASDAQ':'^IXIC',
+};
+function resolveTicker(input) {
+  const upper = input.trim().toUpperCase().replace(/\s+/g,' ');
+  return TICKER_ALIASES[upper] || upper;
+}
+
 const FALLBACK_TICKERS = [
   {sym:'NIFTY',price:'24,853',chg:'+0.86%',up:true},
   {sym:'SENSEX',price:'81,752',chg:'+0.79%',up:true},
@@ -237,7 +263,7 @@ function Skel({w,h,mb=0}){
 }
 
 // ── Article modal — bottom sheet, Bloomberg-style structure ──
-function ArticleModal({article,onClose}){
+function ArticleModal({article,onClose,dark=true}){
   const {score,label,color}=calcSentiment(article.title,article.desc,article.source,article.tag);
   const analysis=getArticleAnalysis(article.title,article.desc,article.tag,label);
 
@@ -253,7 +279,7 @@ function ArticleModal({article,onClose}){
 
   return (
     <div onClick={onClose} style={{position:'fixed',inset:0,background:'rgba(0,0,0,.88)',zIndex:500,display:'flex',alignItems:'flex-end',justifyContent:'center',backdropFilter:'blur(6px)'}}>
-      <div onClick={e=>e.stopPropagation()} style={{background:'#0e0e16',border:'1px solid rgba(255,255,255,.08)',borderRadius:'14px 14px 0 0',padding:'20px 20px 40px',width:'100%',maxWidth:640,maxHeight:'90vh',overflowY:'auto',position:'relative'}}>
+      <div onClick={e=>e.stopPropagation()} style={{background:dark?'#0e0e16':'#ffffff',border:`1px solid ${dark?'rgba(255,255,255,.08)':'rgba(0,0,0,.1)'}`,borderRadius:'14px 14px 0 0',padding:'20px 20px 40px',width:'100%',maxWidth:640,maxHeight:'90vh',overflowY:'auto',position:'relative'}}>
 
         <div style={{width:32,height:3,background:'rgba(255,255,255,.08)',borderRadius:2,margin:'0 auto 20px'}}/>
 
@@ -317,7 +343,7 @@ function ArticleModal({article,onClose}){
 }
 
 // ── Morning Briefing — pulls real market data ─────────────────
-function MorningBriefing({onLaunch, dateStr}){
+function MorningBriefing({onLaunch, dateStr, dark=true}){
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -393,7 +419,7 @@ function MorningBriefing({onLaunch, dateStr}){
 }
 
 // ── Homepage ──────────────────────────────────────────────────
-function Homepage({onLaunch}){
+function Homepage({onLaunch,dark=true}){
   const [time,setTime]=useState(new Date());
   const [alertIdx,setAlertIdx]=useState(0);
   const [tickers,setTickers]=useState(FALLBACK_TICKERS);
@@ -451,7 +477,7 @@ function Homepage({onLaunch}){
   },[]);
 
   return (
-    <div style={{background:'#07070f',minHeight:'calc(100vh - 44px)',color:'#f0f0f0',fontFamily:'sans-serif',overflowX:'hidden'}}>
+    <div style={{background:dark?'#07070f':'#f8f8f5',minHeight:'calc(100vh - 44px)',color:dark?'#f0f0f0':'#111',fontFamily:'sans-serif',overflowX:'hidden'}}>
 
       {/* Ticker */}
       <div style={{background:'#0a0a14',borderBottom:'1px solid rgba(255,255,255,.08)',height:28,overflow:'hidden',display:'flex',alignItems:'center'}}>
@@ -495,7 +521,7 @@ function Homepage({onLaunch}){
         <div style={{fontSize:11,color:'#222',fontFamily:'monospace'}}>free · no signup · no ads</div>
       </div>
 
-      <MorningBriefing onLaunch={onLaunch} dateStr={dateStr}/>
+      <MorningBriefing onLaunch={onLaunch} dateStr={dateStr} dark={dark}/>
 
 
       {/* Live demo panel */}
@@ -591,7 +617,7 @@ function Homepage({onLaunch}){
 }
 
 // ── News Feed ─────────────────────────────────────────────────
-function NewsFeed({initialSym='MARKET'}){
+function NewsFeed({initialSym='MARKET',dark=true}){
   const [articles,setArticles]=useState([]);
   const [loading,setLoading]=useState(false);
   const [error,setError]=useState('');
@@ -660,7 +686,7 @@ function NewsFeed({initialSym='MARKET'}){
   // Fetch price when searching a specific stock
   useEffect(()=>{
     if(activeSym==='MARKET'){setStockPrice(null);return;}
-    fetch(BACKEND+'/api/price?symbol='+activeSym)
+    fetch(BACKEND+'/api/price?symbol='+resolveTicker(activeSym))
       .then(r=>r.json())
       .then(d=>{if(d.price&&d.price!=='N/A')setStockPrice(d);else setStockPrice(null);})
       .catch(()=>setStockPrice(null));
@@ -677,8 +703,8 @@ function NewsFeed({initialSym='MARKET'}){
   const freshLabel=lastFetch.current===0?'':secsSince<60?secsSince+'s ago':Math.floor(secsSince/60)+'m ago';
 
   return (
-    <div style={{background:'#07070f',minHeight:'calc(100vh - 44px)',color:'#f0f0f0',fontFamily:'sans-serif'}}>
-      {selected&&<ArticleModal article={selected} onClose={()=>setSelected(null)}/>}
+    <div style={{background:dark?'#07070f':'#f8f8f5',minHeight:'calc(100vh - 44px)',color:dark?'#f0f0f0':'#111',fontFamily:'sans-serif'}}>
+      {selected&&<ArticleModal article={selected} onClose={()=>setSelected(null)} dark={dark}/>}
 
       {/* Alert bar */}
       <div style={{background:'#0a0a14',borderBottom:'1px solid rgba(255,255,255,.08)',padding:'0 16px',height:30,display:'flex',alignItems:'center',gap:12,overflowX:'auto'}}>
@@ -698,7 +724,7 @@ function NewsFeed({initialSym='MARKET'}){
       {/* Controls */}
       <div style={{borderBottom:'1px solid rgba(255,255,255,.09)',background:'#07070f'}}>
         <div style={{display:'flex',alignItems:'center',padding:'8px 16px',gap:8,borderBottom:'1px solid rgba(255,255,255,.03)'}}>
-          <form onSubmit={e=>{e.preventDefault();if(tickerInput.trim())fetchNews(tickerInput.trim().toUpperCase());}} style={{display:'flex',gap:6,alignItems:'center',flex:1}}>
+          <form onSubmit={e=>{e.preventDefault();if(tickerInput.trim())fetchNews(resolveTicker(tickerInput));}} style={{display:'flex',gap:6,alignItems:'center',flex:1}}>
             <input value={tickerInput} onChange={e=>setTickerInput(e.target.value.toUpperCase())}
               style={{flex:1,maxWidth:130,background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.08)',borderRadius:6,padding:'7px 10px',fontSize:12,color:'#ddd',fontFamily:'monospace',outline:'none',WebkitAppearance:'none'}}
               placeholder="AAPL, RELIANCE.NS..."/>
@@ -781,9 +807,9 @@ function NewsFeed({initialSym='MARKET'}){
           <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(150px,1fr))',gap:1,background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.09)',borderRadius:10,overflow:'hidden',marginBottom:2}}>
             {grid.map((a,i)=>(
               <div key={i} onClick={()=>openArticle(a)}
-                style={{background:'#0d0d18',padding:'14px',display:'flex',flexDirection:'column',gap:6,cursor:'pointer',transition:'background .12s',WebkitTapHighlightColor:'transparent'}}
-                onMouseEnter={e=>e.currentTarget.style.background='#13131e'}
-                onMouseLeave={e=>e.currentTarget.style.background='#0d0d18'}>
+                style={{background:dark?'#0d0d18':'#ffffff',padding:'14px',display:'flex',flexDirection:'column',gap:6,cursor:'pointer',transition:'background .12s',WebkitTapHighlightColor:'transparent'}}
+                onMouseEnter={e=>e.currentTarget.style.background=dark?'#13131e':'#f5f5f2'}
+                onMouseLeave={e=>e.currentTarget.style.background=dark?'#0d0d18':'#ffffff'}>
                 <div style={{fontSize:9,color:'#444',letterSpacing:'.06em',textTransform:'uppercase',fontFamily:'monospace'}}>{a.source}</div>
                 <div style={{fontSize:'clamp(11px,2vw,12px)',fontWeight:600,color:'#ddd',lineHeight:1.42,fontFamily:'Georgia,serif',flex:1}}>{a.title}</div>
                 <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',paddingTop:4}}>
@@ -821,14 +847,14 @@ function NewsFeed({initialSym='MARKET'}){
 }
 
 // ── Watchlist ─────────────────────────────────────────────────
-function Watchlist({onSearch}){
+function Watchlist({onSearch,dark=true}){
   const [list,setList]=useState(()=>{try{return JSON.parse(localStorage.getItem('stoxify_wl')||'[]');}catch{return[];}});
   const [input,setInput]=useState('');
   const [prices,setPrices]=useState({});
   const [loading,setLoading]=useState(false);
 
   const save=nl=>{setList(nl);try{localStorage.setItem('stoxify_wl',JSON.stringify(nl));}catch{}};
-  const add=()=>{const s=input.trim().toUpperCase();if(!s||list.includes(s))return;save([...list,s]);setInput('');};
+  const add=()=>{const s=resolveTicker(input);if(!s||list.includes(s))return;save([...list,s]);setInput('');};
   const remove=s=>save(list.filter(x=>x!==s));
 
   useEffect(()=>{
@@ -842,7 +868,7 @@ function Watchlist({onSearch}){
   const QUICK=['AAPL','NVDA','TSLA','MSFT','RELIANCE.NS','TCS.NS','INFY.NS','HDFCBANK.NS'];
 
   return (
-    <div style={{background:'#07070f',minHeight:'calc(100vh - 44px)',padding:'20px 16px',maxWidth:640,margin:'0 auto',color:'#f0f0f0',fontFamily:'sans-serif'}}>
+    <div style={{background:dark?'#07070f':'#f8f8f5',minHeight:'calc(100vh - 44px)',padding:'20px 16px',maxWidth:640,margin:'0 auto',color:dark?'#f0f0f0':'#111',fontFamily:'sans-serif'}}>
       <div style={{marginBottom:20}}>
         <h2 style={{fontFamily:'Georgia,serif',fontSize:'clamp(18px,4vw,22px)',fontWeight:700,color:'#e8e8e8',marginBottom:6}}>Watchlist</h2>
         <p style={{fontSize:11,color:'#444',fontFamily:'monospace',lineHeight:1.6}}>US stocks: AAPL, NVDA · Indian stocks: RELIANCE.NS, TCS.NS, INFY.NS</p>
@@ -890,7 +916,7 @@ function Watchlist({onSearch}){
 }
 
 // ── Compare ───────────────────────────────────────────────────
-function Compare(){
+function Compare({dark=true}){
   const [stocks,setStocks]=useState(['AAPL','NVDA']);
   const [input,setInput]=useState('');
   const [prices,setPrices]=useState({});
@@ -935,11 +961,11 @@ function Compare(){
 
   useEffect(()=>{load(stocks);},[stocks,load]);
 
-  const add=()=>{const s=input.trim().toUpperCase();if(!s||stocks.includes(s)||stocks.length>=3)return;setStocks([...stocks,s]);setInput('');};
+  const add=()=>{const s=resolveTicker(input);if(!s||stocks.includes(s)||stocks.length>=3)return;setStocks([...stocks,s]);setInput('');};
   const remove=s=>setStocks(stocks.filter(x=>x!==s));
 
   return(
-    <div style={{background:'#07070f',minHeight:'calc(100vh - 44px)',padding:'20px 16px',color:'#f0f0f0',fontFamily:'sans-serif'}}>
+    <div style={{background:dark?'#07070f':'#f8f8f5',minHeight:'calc(100vh - 44px)',padding:'20px 16px',color:dark?'#f0f0f0':'#111',fontFamily:'sans-serif'}}>
       <div style={{maxWidth:960,margin:'0 auto'}}>
         <div style={{marginBottom:18}}>
           <h2 style={{fontFamily:'Georgia,serif',fontSize:'clamp(18px,4vw,22px)',fontWeight:700,color:'#e8e8e8',marginBottom:4}}>Compare</h2>
@@ -994,7 +1020,7 @@ function Compare(){
 
 
 // ── Daily Briefing Page ───────────────────────────────────────
-function Briefing(){
+function Briefing({dark=true}){
   const [data, setData] = useState({indices:[], news:[], loaded:false, error:false});
   const [time, setTime] = useState(new Date());
 
@@ -1064,7 +1090,7 @@ function Briefing(){
   };
 
   return (
-    <div style={{background:'#07070f',minHeight:'calc(100vh - 44px)',color:'#f0f0f0',fontFamily:'sans-serif',padding:'28px clamp(16px,4vw,28px)'}}>
+    <div style={{background:dark?'#07070f':'#f8f8f5',minHeight:'calc(100vh - 44px)',color:dark?'#f0f0f0':'#111',fontFamily:'sans-serif',padding:'28px clamp(16px,4vw,28px)'}}>
       <div style={{maxWidth:720,margin:'0 auto'}}>
 
         {/* Header */}
@@ -1173,13 +1199,14 @@ function Briefing(){
 export default function App(){
   const [page,setPage]=useState('home');
   const [feedTicker,setFeedTicker]=useState('MARKET');
+  const [dark,setDark]=useState(true);
   const [time,setTime]=useState(new Date());
   useEffect(()=>{const t=setInterval(()=>setTime(new Date()),1000);return()=>clearInterval(t);},[]);
   const timeStr=time.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
   const goToFeed=sym=>{setFeedTicker(sym||'MARKET');setPage('feed');};
 
   return(
-    <div style={{background:'#07070f',minHeight:'100vh'}}>
+    <div style={{background:dark?'#07070f':'#f8f8f5',minHeight:'100vh'}}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap');
         *{box-sizing:border-box;margin:0;padding:0;}
@@ -1206,13 +1233,19 @@ export default function App(){
             </button>
           ))}
         </div>
-        <span style={{fontSize:9,color:'#555',fontFamily:'monospace',flexShrink:0}}>{timeStr}</span>
+        <div style={{display:'flex',alignItems:'center',gap:8}}>
+          <button onClick={()=>setDark(d=>!d)}
+            style={{fontSize:10,color:dark?'#555':'#777',background:dark?'rgba(255,255,255,.06)':'rgba(0,0,0,.06)',border:`1px solid ${dark?'rgba(255,255,255,.1)':'rgba(0,0,0,.12)'}`,borderRadius:5,padding:'4px 12px',cursor:'pointer',fontFamily:'monospace',transition:'all .15s',WebkitTapHighlightColor:'transparent'}}>
+            {dark?'light':'dark'}
+          </button>
+          <span style={{fontSize:9,color:dark?'#333':'#aaa',fontFamily:'monospace',flexShrink:0}}>{timeStr}</span>
+        </div>
       </div>
-      {page==='home'&&<Homepage onLaunch={()=>setPage('feed')}/>}
-      {page==='feed'&&<NewsFeed initialSym={feedTicker}/>}
-      {page==='briefing'&&<Briefing/>}
-      {page==='watchlist'&&<Watchlist onSearch={goToFeed}/>}
-      {page==='compare'&&<Compare/>}
+      {page==='home'&&<Homepage onLaunch={()=>setPage('feed')} dark={dark}/>}
+      {page==='feed'&&<NewsFeed initialSym={feedTicker} dark={dark}/>}
+      {page==='briefing'&&<Briefing dark={dark}/>}
+      {page==='watchlist'&&<Watchlist onSearch={goToFeed} dark={dark}/>}
+      {page==='compare'&&<Compare dark={dark}/>}
     </div>
   );
 }
