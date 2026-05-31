@@ -721,8 +721,23 @@ function NewsFeed({initialSym='MARKET',dark=true}){
         <span style={{fontSize:9,color:'#555',fontFamily:'monospace',marginLeft:'auto',flexShrink:0}}>refreshes every 60s</span>
       </div>
 
+      {/* Stock price bar */}
+      {stockPrice&&activeSym!=='MARKET'&&(
+        <div style={{background:dark?'#0d0d18':'#ffffff',borderBottom:`1px solid ${dark?'rgba(255,255,255,.09)':'rgba(0,0,0,.08)'}`,padding:'12px 16px',display:'flex',alignItems:'center',gap:20,flexWrap:'wrap'}}>
+          <div>
+            <div style={{fontSize:9,color:'#444',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:4}}>{activeSym}</div>
+            <div style={{fontSize:'clamp(22px,4vw,28px)',fontWeight:700,color:dark?'#e8e8e8':'#111',fontFamily:'monospace',lineHeight:1}}>{stockPrice.price}</div>
+          </div>
+          <div>
+            <div style={{fontSize:14,fontWeight:600,fontFamily:'monospace',color:stockPrice.up?'#22c55e':'#ef4444'}}>{stockPrice.changePercent}</div>
+            <div style={{fontSize:11,color:'#444',fontFamily:'monospace'}}>{stockPrice.change} today</div>
+          </div>
+          {stockPrice.currency&&<div style={{fontSize:9,color:'#333',fontFamily:'monospace',marginLeft:'auto'}}>{stockPrice.currency}</div>}
+        </div>
+      )}
+
       {/* Controls */}
-      <div style={{borderBottom:'1px solid rgba(255,255,255,.09)',background:'#07070f'}}>
+      <div style={{borderBottom:'1px solid rgba(255,255,255,.09)',background:dark?'#07070f':'#f8f8f5'}}>
         <div style={{display:'flex',alignItems:'center',padding:'8px 16px',gap:8,borderBottom:'1px solid rgba(255,255,255,.03)'}}>
           <form onSubmit={e=>{e.preventDefault();if(tickerInput.trim())fetchNews(resolveTicker(tickerInput));}} style={{display:'flex',gap:6,alignItems:'center',flex:1}}>
             <input value={tickerInput} onChange={e=>setTickerInput(e.target.value.toUpperCase())}
