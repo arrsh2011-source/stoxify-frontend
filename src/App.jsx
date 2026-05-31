@@ -255,7 +255,7 @@ function Tag({cls,label}){
     tip:{bg:'rgba(168,85,247,.12)',tx:'#c084fc'},
     tg:{bg:'rgba(255,255,255,.1)',tx:'#666'},
   }[cls]||{bg:'rgba(255,255,255,.1)',tx:'#666'};
-  return <span style={{fontSize:9,padding:'2px 7px',borderRadius:3,fontFamily:'monospace',fontWeight:600,background:c.bg,color:c.tx,letterSpacing:'0.06em'}}>{label}</span>;
+  return <span style={{fontSize:15,padding:'2px 7px',borderRadius:3,fontFamily:'monospace',fontWeight:600,background:c.bg,color:c.tx,letterSpacing:'0.06em'}}>{label}</span>;
 }
 
 function Skel({w,h,mb=0}){
@@ -269,11 +269,11 @@ function ArticleModal({article,onClose,dark=true}){
 
   const Section=({title,children,accent})=>(
     <div style={{marginBottom:20}}>
-      <div style={{fontSize:9,color:accent||'#2a2a2a',fontFamily:'monospace',letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:8,display:'flex',alignItems:'center',gap:6}}>
+      <div style={{fontSize:15,color:accent||'#2a2a2a',fontFamily:'monospace',letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:8,display:'flex',alignItems:'center',gap:6}}>
         {accent&&<span style={{width:3,height:3,borderRadius:'50%',background:accent,display:'inline-block'}}/>}
         {title}
       </div>
-      <p style={{fontSize:13,color:'#888',lineHeight:1.8,margin:0,fontFamily:'Georgia,serif'}}>{children}</p>
+      <p style={{fontSize:15,color:'#888',lineHeight:1.8,margin:0,fontFamily:'Georgia,serif'}}>{children}</p>
     </div>
   );
 
@@ -285,21 +285,21 @@ function ArticleModal({article,onClose,dark=true}){
 
         {/* source + tag + time */}
         <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:14,flexWrap:'wrap'}}>
-          <span style={{fontSize:10,color:'#555',letterSpacing:'.08em',textTransform:'uppercase',fontFamily:'monospace'}}>{article.source}</span>
+          <span style={{fontSize:15,color:'#555',letterSpacing:'.08em',textTransform:'uppercase',fontFamily:'monospace'}}>{article.source}</span>
           <Tag cls={article.tagMeta.cls} label={article.tagMeta.label}/>
-          <span style={{fontSize:9,color:'#222',fontFamily:'monospace',marginLeft:'auto'}}>{article.time}</span>
+          <span style={{fontSize:15,color:'#222',fontFamily:'monospace',marginLeft:'auto'}}>{article.time}</span>
         </div>
 
         {/* headline */}
         <h2 style={{fontFamily:'Georgia,serif',fontSize:'clamp(16px,4vw,21px)',fontWeight:700,color:'#f5f5f5',lineHeight:1.32,marginBottom:12}}>{article.title}</h2>
 
         {/* original summary */}
-        {article.desc&&<p style={{fontSize:13,color:'#999',lineHeight:1.8,fontFamily:'Georgia,serif',marginBottom:16,paddingBottom:16,borderBottom:'1px solid rgba(255,255,255,.09)'}}>{article.desc}</p>}
+        {article.desc&&<p style={{fontSize:15,color:'#999',lineHeight:1.8,fontFamily:'Georgia,serif',marginBottom:16,paddingBottom:16,borderBottom:'1px solid rgba(255,255,255,.09)'}}>{article.desc}</p>}
 
         {/* read original link */}
         {article.url&&(
           <a href={article.url} target="_blank" rel="noreferrer"
-            style={{display:'inline-flex',alignItems:'center',gap:5,marginBottom:20,fontSize:10,color:'#888',fontFamily:'monospace',textDecoration:'none',border:'1px solid rgba(255,255,255,.1)',borderRadius:5,padding:'5px 10px',transition:'border-color .15s'}}
+            style={{display:'inline-flex',alignItems:'center',gap:5,marginBottom:20,fontSize:15,color:'#888',fontFamily:'monospace',textDecoration:'none',border:'1px solid rgba(255,255,255,.1)',borderRadius:5,padding:'5px 10px',transition:'border-color .15s'}}
             onMouseEnter={e=>e.currentTarget.style.borderColor='rgba(255,255,255,.16)'}
             onMouseLeave={e=>e.currentTarget.style.borderColor='rgba(255,255,255,.1)'}>
             Read original article
@@ -309,8 +309,8 @@ function ArticleModal({article,onClose,dark=true}){
         {/* Sentiment — honest, minimal */}
         <div style={{background:'rgba(255,255,255,.02)',border:'1px solid rgba(255,255,255,.09)',borderRadius:8,padding:'10px 12px',marginBottom:20}}>
           <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:8}}>
-            <span style={{fontSize:9,color:'#444',fontFamily:'monospace',letterSpacing:'0.08em'}}>SENTIMENT</span>
-            <span style={{fontSize:9,color:'#555',fontFamily:'monospace'}}>keyword-based · indicative only</span>
+            <span style={{fontSize:15,color:'#444',fontFamily:'monospace',letterSpacing:'0.08em'}}>SENTIMENT</span>
+            <span style={{fontSize:15,color:'#555',fontFamily:'monospace'}}>keyword-based · indicative only</span>
           </div>
           <SentimentBar score={score} label={label} color={color}/>
         </div>
@@ -323,18 +323,18 @@ function ArticleModal({article,onClose,dark=true}){
         {/* Bull / Bear side by side */}
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:2,marginBottom:20}}>
           <div style={{background:'rgba(34,197,94,.04)',border:'1px solid rgba(34,197,94,.1)',borderRadius:8,padding:'12px'}}>
-            <div style={{fontSize:9,color:'#22c55e',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:8}}>BULL CASE</div>
-            <p style={{fontSize:12,color:'#999',lineHeight:1.75,margin:0,fontFamily:'Georgia,serif'}}>{analysis.bullCase}</p>
+            <div style={{fontSize:15,color:'#22c55e',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:8}}>BULL CASE</div>
+            <p style={{fontSize:15,color:'#999',lineHeight:1.75,margin:0,fontFamily:'Georgia,serif'}}>{analysis.bullCase}</p>
           </div>
           <div style={{background:'rgba(239,68,68,.04)',border:'1px solid rgba(239,68,68,.1)',borderRadius:8,padding:'12px'}}>
-            <div style={{fontSize:9,color:'#ef4444',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:8}}>BEAR CASE</div>
-            <p style={{fontSize:12,color:'#999',lineHeight:1.75,margin:0,fontFamily:'Georgia,serif'}}>{analysis.bearCase}</p>
+            <div style={{fontSize:15,color:'#ef4444',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:8}}>BEAR CASE</div>
+            <p style={{fontSize:15,color:'#999',lineHeight:1.75,margin:0,fontFamily:'Georgia,serif'}}>{analysis.bearCase}</p>
           </div>
         </div>
 
         <Section title="What to watch next" accent="#f59e0b">{analysis.watchNext}</Section>
 
-        <div style={{fontSize:9,color:'#333',fontFamily:'monospace',lineHeight:1.6,borderTop:'1px solid rgba(255,255,255,.08)',paddingTop:14}}>
+        <div style={{fontSize:15,color:'#333',fontFamily:'monospace',lineHeight:1.6,borderTop:'1px solid rgba(255,255,255,.08)',paddingTop:14}}>
           Analysis is rule-based and general — not personalised, not backtested, not financial advice. Always do your own research.
         </div>
       </div>
@@ -391,10 +391,10 @@ function MorningBriefing({onLaunch, dateStr, dark=true}){
     <div style={{maxWidth:680,margin:'0 auto',padding:'0 clamp(16px,4vw,28px) clamp(32px,5vw,48px)'}}>
       <div style={{background:'#0a0a14',border:'1px solid rgba(255,255,255,.1)',borderRadius:12,padding:'20px 22px'}}>
         <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:16}}>
-          <div style={{fontSize:9,color:'#444',fontFamily:'monospace',letterSpacing:'0.1em'}}>MORNING BRIEFING</div>
-          <div style={{fontSize:9,color:'#3a3a3a',fontFamily:'monospace'}}>{dateStr}</div>
+          <div style={{fontSize:15,color:'#444',fontFamily:'monospace',letterSpacing:'0.1em'}}>MORNING BRIEFING</div>
+          <div style={{fontSize:15,color:'#3a3a3a',fontFamily:'monospace'}}>{dateStr}</div>
         </div>
-        <p style={{fontSize:'clamp(13px,2.5vw,15px)',color:'#777',lineHeight:1.9,fontFamily:'Georgia,serif',marginBottom:16}}>
+        <p style={{fontSize:'clamp(16px,2.5vw,18px)',color:'#777',lineHeight:1.9,fontFamily:'Georgia,serif',marginBottom:16}}>
           Good morning. Here is what you need to know before markets open today.
         </p>
         {loading?(
@@ -405,13 +405,13 @@ function MorningBriefing({onLaunch, dateStr, dark=true}){
           items.map((item,i)=>(
             <div key={i} style={{display:'flex',alignItems:'flex-start',gap:10,marginBottom:i<items.length-1?10:0}}>
               <span style={{width:4,height:4,borderRadius:'50%',background:item.dot,flexShrink:0,marginTop:8}}/>
-              <p style={{fontSize:'clamp(12px,2vw,13px)',color:'#666',lineHeight:1.75,margin:0,fontFamily:'Georgia,serif'}}>{item.text}</p>
+              <p style={{fontSize:'clamp(13px,2vw,15px)',color:'#666',lineHeight:1.75,margin:0,fontFamily:'Georgia,serif'}}>{item.text}</p>
             </div>
           ))
         )}
         <div style={{marginTop:16,paddingTop:14,borderTop:'1px solid rgba(255,255,255,.09)',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-          <span style={{fontSize:9,color:'#3a3a3a',fontFamily:'monospace'}}>live data · updates on refresh</span>
-          <button onClick={onLaunch} style={{fontSize:10,color:'#555',background:'transparent',border:'1px solid rgba(255,255,255,.12)',borderRadius:5,padding:'5px 10px',cursor:'pointer',fontFamily:'monospace',WebkitTapHighlightColor:'transparent'}}>open feed</button>
+          <span style={{fontSize:15,color:'#3a3a3a',fontFamily:'monospace'}}>live data · updates on refresh</span>
+          <button onClick={onLaunch} style={{fontSize:15,color:'#555',background:'transparent',border:'1px solid rgba(255,255,255,.12)',borderRadius:5,padding:'5px 10px',cursor:'pointer',fontFamily:'monospace',WebkitTapHighlightColor:'transparent'}}>open feed</button>
         </div>
       </div>
     </div>
@@ -483,7 +483,7 @@ function Homepage({onLaunch,dark=true}){
       <div style={{background:'#0a0a14',borderBottom:'1px solid rgba(255,255,255,.08)',height:28,overflow:'hidden',display:'flex',alignItems:'center'}}>
         <div style={{display:'flex',animation:'ticker 50s linear infinite',whiteSpace:'nowrap'}}>
           {[...tickers,...tickers,...tickers].map((t,i)=>(
-            <span key={i} style={{display:'inline-flex',alignItems:'center',gap:8,padding:'0 20px',fontSize:11,fontFamily:'monospace',borderRight:'1px solid rgba(255,255,255,.08)'}}>
+            <span key={i} style={{display:'inline-flex',alignItems:'center',gap:8,padding:'0 20px',fontSize:15,fontFamily:'monospace',borderRight:'1px solid rgba(255,255,255,.08)'}}>
               <span style={{color:'#888',fontWeight:700,letterSpacing:'0.04em'}}>{t.sym}</span>
               <span style={{color:'#999'}}>{t.price}</span>
               <span style={{color:t.up?'#22c55e':'#ef4444',fontWeight:600}}>{t.chg}</span>
@@ -495,9 +495,9 @@ function Homepage({onLaunch,dark=true}){
       {/* Hero */}
       <div style={{maxWidth:680,margin:'0 auto',padding:'clamp(48px,8vw,96px) clamp(20px,5vw,28px) clamp(40px,6vw,72px)',textAlign:'center'}}>
         <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:10,marginBottom:28,flexWrap:'wrap'}}>
-          <span style={{fontSize:11,color:'#444',fontFamily:'monospace',letterSpacing:'0.06em'}}>{dateStr}</span>
+          <span style={{fontSize:15,color:'#444',fontFamily:'monospace',letterSpacing:'0.06em'}}>{dateStr}</span>
           <span style={{width:1,height:10,background:'rgba(255,255,255,.12)'}}/>
-          <span style={{display:'inline-flex',alignItems:'center',gap:5,fontSize:10,color:'#22c55e',fontFamily:'monospace'}}>
+          <span style={{display:'inline-flex',alignItems:'center',gap:5,fontSize:15,color:'#22c55e',fontFamily:'monospace'}}>
             <span style={{width:4,height:4,borderRadius:'50%',background:'#22c55e',animation:'pulse 1.8s infinite'}}/>
             LIVE {timeStr} IST
           </span>
@@ -508,17 +508,17 @@ function Homepage({onLaunch,dark=true}){
           <em style={{fontStyle:'italic',fontWeight:400,color:'#888'}}>finally explained.</em>
         </h1>
 
-        <p style={{fontSize:'clamp(14px,2.5vw,16px)',color:'#888',lineHeight:1.9,maxWidth:440,margin:'0 auto 36px'}}>
+        <p style={{fontSize:'clamp(16px,2.5vw,18px)',color:'#888',lineHeight:1.9,maxWidth:440,margin:'0 auto 36px'}}>
           Live prices and real news for Indian and global markets. We tell you what it means — not just what happened.
         </p>
 
         <button onClick={onLaunch}
-          style={{fontSize:'clamp(13px,2.5vw,15px)',color:'#07070f',background:'#efefef',border:'none',borderRadius:8,padding:'clamp(11px,2vw,14px) clamp(28px,5vw,40px)',cursor:'pointer',fontWeight:700,transition:'all .2s',marginBottom:10,display:'inline-block',WebkitTapHighlightColor:'transparent'}}
+          style={{fontSize:'clamp(16px,2.5vw,18px)',color:'#07070f',background:'#efefef',border:'none',borderRadius:8,padding:'clamp(11px,2vw,14px) clamp(28px,5vw,40px)',cursor:'pointer',fontWeight:700,transition:'all .2s',marginBottom:10,display:'inline-block',WebkitTapHighlightColor:'transparent'}}
           onMouseEnter={e=>{e.target.style.background='#fff';e.target.style.transform='translateY(-1px)';}}
           onMouseLeave={e=>{e.target.style.background='#efefef';e.target.style.transform='translateY(0)';}}>
           Open the feed
         </button>
-        <div style={{fontSize:11,color:'#222',fontFamily:'monospace'}}>free · no signup · no ads</div>
+        <div style={{fontSize:15,color:'#222',fontFamily:'monospace'}}>free · no signup · no ads</div>
       </div>
 
       <MorningBriefing onLaunch={onLaunch} dateStr={dateStr} dark={dark}/>
@@ -528,9 +528,9 @@ function Homepage({onLaunch,dark=true}){
       <div style={{maxWidth:680,margin:'0 auto',padding:'0 clamp(16px,4vw,28px) clamp(48px,8vw,72px)'}}>
         <div style={{border:'1px solid rgba(255,255,255,.12)',borderRadius:12,overflow:'hidden'}}>
           <div style={{background:'#0a0a14',padding:'10px 16px',display:'flex',alignItems:'center',gap:10,borderBottom:'1px solid rgba(255,255,255,.08)'}}>
-            <span style={{fontSize:9,color:'#444',fontFamily:'monospace',letterSpacing:'0.1em',flexShrink:0}}>LIVE</span>
+            <span style={{fontSize:15,color:'#444',fontFamily:'monospace',letterSpacing:'0.1em',flexShrink:0}}>LIVE</span>
             <span style={{width:1,height:10,background:'rgba(255,255,255,.1)',flexShrink:0}}/>
-            <span key={alertIdx} style={{fontSize:11,color:SIGNALS[alertIdx].color,fontFamily:'monospace',animation:'fadeIn .5s ease',flex:1,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{SIGNALS[alertIdx].text}</span>
+            <span key={alertIdx} style={{fontSize:15,color:SIGNALS[alertIdx].color,fontFamily:'monospace',animation:'fadeIn .5s ease',flex:1,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{SIGNALS[alertIdx].text}</span>
           </div>
           {demoNews.map((h,i)=>(
             <div key={i} onClick={onLaunch}
@@ -539,40 +539,42 @@ function Homepage({onLaunch,dark=true}){
               onMouseLeave={e=>e.currentTarget.style.background='transparent'}>
               <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',gap:10,marginBottom:8}}>
                 <div style={{flex:1,minWidth:0}}>
-                  <span style={{fontSize:9,color:'#444',fontFamily:'monospace',textTransform:'uppercase',letterSpacing:'0.06em',display:'block',marginBottom:5}}>{h.src}</span>
-                  <span style={{fontSize:'clamp(12px,2.5vw,13px)',color:i===0?'#ddd':'#555',fontWeight:i===0?500:400,lineHeight:1.45,fontFamily:'Georgia,serif',display:'block'}}>{h.title}</span>
+                  <span style={{fontSize:15,color:'#444',fontFamily:'monospace',textTransform:'uppercase',letterSpacing:'0.06em',display:'block',marginBottom:5}}>{h.src}</span>
+                  <span style={{fontSize:'clamp(14px,2.5vw,15px)',color:i===0?'#ddd':'#555',fontWeight:i===0?500:400,lineHeight:1.45,fontFamily:'Georgia,serif',display:'block'}}>{h.title}</span>
                 </div>
                 <div style={{display:'flex',flexDirection:'column',alignItems:'flex-end',gap:5,flexShrink:0}}>
                   <Tag cls={h.tag} label={TAG_META[h.tag]&&TAG_META[h.tag].label||'Markets'}/>
-                  <span style={{fontSize:9,color:'#444',fontFamily:'monospace',whiteSpace:'nowrap'}}>{h.time}</span>
+                  <span style={{fontSize:15,color:'#444',fontFamily:'monospace',whiteSpace:'nowrap'}}>{h.time}</span>
                 </div>
               </div>
               <div style={{display:'flex',alignItems:'center',gap:8}}>
                 <div style={{flex:1,height:1.5,background:'rgba(255,255,255,.08)',borderRadius:1}}>
                   <div style={{height:'100%',width:h.score+'%',background:h.color,borderRadius:1}}/>
                 </div>
-                <span style={{fontSize:9,color:'#444',fontFamily:'monospace',whiteSpace:'nowrap'}}>{h.label}</span>
+                <span style={{fontSize:15,color:'#444',fontFamily:'monospace',whiteSpace:'nowrap'}}>{h.label}</span>
               </div>
             </div>
           ))}
           <div onClick={onLaunch} style={{padding:'10px 16px',display:'flex',justifyContent:'center',cursor:'pointer',background:'rgba(0,0,0,.2)',transition:'background .15s'}}
             onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,.02)'}
             onMouseLeave={e=>e.currentTarget.style.background='rgba(0,0,0,.2)'}>
-            <span style={{fontSize:11,color:'#555',fontFamily:'monospace'}}>open full feed</span>
+            <span style={{fontSize:15,color:'#555',fontFamily:'monospace'}}>open full feed</span>
           </div>
         </div>
       </div>
 
       {/* 3 honest value props */}
       <div style={{borderTop:'1px solid rgba(255,255,255,.08)',padding:'clamp(40px,7vw,72px) clamp(16px,4vw,28px)'}}>
-        <div style={{maxWidth:680,margin:'0 auto',display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))',gap:2}}>
+        <div style={{maxWidth:760,margin:'0 auto',display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(160px,1fr))',gap:1}}>
           {[
-            {num:'01',title:'Live prices',   desc:'Nifty 50, Sensex, and 500+ major US stocks. Updated every 60 seconds. No delay.'},
-            {num:'02',title:'Real news',     desc:'Covers all Nifty 50 stocks and 500 major US stocks — from Reuters, Bloomberg, and ET Markets.'},
-            {num:'03',title:'Plain English', desc:'Click any headline and we tell you what it means — in plain language, not jargon.'},
+            {num:'01',title:'Live prices',     desc:'Nifty 50, Sensex, and 500+ major US stocks. Updated every 60 seconds. Watch the market move in real time.'},
+            {num:'02',title:'Real news',       desc:'Headlines from Reuters, Bloomberg, ET Markets, and CNBC — filtered for what actually moves stocks, not clickbait.'},
+            {num:'03',title:'Stock analysis',  desc:'Search any stock and get price, 52-week range, P/E ratio, sentiment, bull case, bear case, and what to watch next.'},
+            {num:'04',title:'Morning briefing',desc:'Every morning, a plain-English summary of what happened overnight and what it means for Indian markets today.'},
+            {num:'05',title:'Plain English',   desc:'Click any headline and we explain what it means, why markets care, and what you should actually do with that information.'},
           ].map((f,i)=>(
             <div key={i} style={{padding:'24px 20px',borderLeft:i>0?'1px solid rgba(255,255,255,.08)':'none'}}>
-              <div style={{fontSize:10,color:'#555',fontFamily:'monospace',marginBottom:12}}>{f.num}</div>
+              <div style={{fontSize:15,color:'#555',fontFamily:'monospace',marginBottom:12}}>{f.num}</div>
               <div style={{fontSize:'clamp(13px,2vw,15px)',fontWeight:600,color:'#ddd',marginBottom:8,fontFamily:'Georgia,serif'}}>{f.title}</div>
               <div style={{fontSize:'clamp(11px,1.8vw,13px)',color:'#555',lineHeight:1.8}}>{f.desc}</div>
             </div>
@@ -583,11 +585,11 @@ function Homepage({onLaunch,dark=true}){
       {/* About — honest, personal */}
       <div style={{borderTop:'1px solid rgba(255,255,255,.08)',padding:'clamp(40px,7vw,72px) clamp(16px,4vw,28px)'}}>
         <div style={{maxWidth:540,margin:'0 auto'}}>
-          <div style={{fontSize:9,color:'#444',fontFamily:'monospace',letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:16}}>Why we built this</div>
-          <p style={{fontSize:'clamp(14px,2.5vw,16px)',color:'#999',lineHeight:1.9,fontFamily:'Georgia,serif',marginBottom:16}}>
+          <div style={{fontSize:15,color:'#444',fontFamily:'monospace',letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:16}}>Why we built this</div>
+          <p style={{fontSize:'clamp(16px,2.5vw,18px)',color:'#999',lineHeight:1.9,fontFamily:'Georgia,serif',marginBottom:16}}>
             Most finance apps assume you already know everything. They throw numbers at you with no context. We built Stoxify because we got tired of reading a headline and not knowing what to actually do with it.
           </p>
-          <p style={{fontSize:'clamp(13px,2vw,14px)',color:'#555',lineHeight:1.9,fontFamily:'Georgia,serif'}}>
+          <p style={{fontSize:'clamp(15px,2vw,17px)',color:'#555',lineHeight:1.9,fontFamily:'Georgia,serif'}}>
             Stoxify is not a trading terminal. It is not Bloomberg. It is a simple feed that tells you what is happening in markets and — more importantly — what it actually means. Built for the next generation of Indian investors.
           </p>
         </div>
@@ -608,9 +610,9 @@ function Homepage({onLaunch,dark=true}){
       </div>
 
       <div style={{borderTop:'1px solid rgba(255,255,255,.08)',padding:'16px clamp(16px,4vw,28px)',display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:8}}>
-        <span style={{fontSize:14,fontWeight:700,color:'#555',fontFamily:'Georgia,serif'}}>Stoxify</span>
-        <span style={{fontSize:9,color:'#555',fontFamily:'monospace'}}>Built for India · Sentiment is indicative only · Not financial advice</span>
-        <span style={{fontSize:9,color:'#555',fontFamily:'monospace'}}>{timeStr} IST</span>
+        <span style={{fontSize:15,fontWeight:700,color:'#555',fontFamily:'Georgia,serif'}}>Stoxify</span>
+        <span style={{fontSize:15,color:'#555',fontFamily:'monospace'}}>Built for India · Sentiment is indicative only · Not financial advice</span>
+        <span style={{fontSize:15,color:'#555',fontFamily:'monospace'}}>{timeStr} IST</span>
       </div>
     </div>
   );
@@ -713,26 +715,26 @@ function NewsFeed({initialSym='MARKET',dark=true}){
           {text:'Nifty breadth 38/50 advancing',color:'#22c55e'},
           {text:'10Y yield +8bps',color:'#ef4444'},
         ].map((a,i)=>(
-          <span key={i} style={{display:'inline-flex',alignItems:'center',gap:5,fontSize:10,fontFamily:'monospace',color:a.color,whiteSpace:'nowrap',paddingRight:12,borderRight:i<2?'1px solid rgba(255,255,255,.08)':'none',flexShrink:0}}>
+          <span key={i} style={{display:'inline-flex',alignItems:'center',gap:5,fontSize:15,fontFamily:'monospace',color:a.color,whiteSpace:'nowrap',paddingRight:12,borderRight:i<2?'1px solid rgba(255,255,255,.08)':'none',flexShrink:0}}>
             <span style={{width:3,height:3,borderRadius:'50%',background:a.color,animation:'pulse 2s infinite',flexShrink:0}}/>
             {a.text}
           </span>
         ))}
-        <span style={{fontSize:9,color:'#555',fontFamily:'monospace',marginLeft:'auto',flexShrink:0}}>refreshes every 60s</span>
+        <span style={{fontSize:15,color:'#555',fontFamily:'monospace',marginLeft:'auto',flexShrink:0}}>refreshes every 60s</span>
       </div>
 
       {/* Stock price bar */}
       {stockPrice&&activeSym!=='MARKET'&&(
         <div style={{background:dark?'#0d0d18':'#ffffff',borderBottom:`1px solid ${dark?'rgba(255,255,255,.09)':'rgba(0,0,0,.08)'}`,padding:'12px 16px',display:'flex',alignItems:'center',gap:20,flexWrap:'wrap'}}>
           <div>
-            <div style={{fontSize:9,color:'#444',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:4}}>{activeSym}</div>
+            <div style={{fontSize:15,color:'#444',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:4}}>{activeSym}</div>
             <div style={{fontSize:'clamp(22px,4vw,28px)',fontWeight:700,color:dark?'#e8e8e8':'#111',fontFamily:'monospace',lineHeight:1}}>{stockPrice.price}</div>
           </div>
           <div>
-            <div style={{fontSize:14,fontWeight:600,fontFamily:'monospace',color:stockPrice.up?'#22c55e':'#ef4444'}}>{stockPrice.changePercent}</div>
-            <div style={{fontSize:11,color:'#444',fontFamily:'monospace'}}>{stockPrice.change} today</div>
+            <div style={{fontSize:15,fontWeight:600,fontFamily:'monospace',color:stockPrice.up?'#22c55e':'#ef4444'}}>{stockPrice.changePercent}</div>
+            <div style={{fontSize:15,color:'#444',fontFamily:'monospace'}}>{stockPrice.change} today</div>
           </div>
-          {stockPrice.currency&&<div style={{fontSize:9,color:'#333',fontFamily:'monospace',marginLeft:'auto'}}>{stockPrice.currency}</div>}
+          {stockPrice.currency&&<div style={{fontSize:15,color:'#333',fontFamily:'monospace',marginLeft:'auto'}}>{stockPrice.currency}</div>}
         </div>
       )}
 
@@ -741,21 +743,21 @@ function NewsFeed({initialSym='MARKET',dark=true}){
         <div style={{display:'flex',alignItems:'center',padding:'8px 16px',gap:8,borderBottom:'1px solid rgba(255,255,255,.03)'}}>
           <form onSubmit={e=>{e.preventDefault();if(tickerInput.trim())fetchNews(resolveTicker(tickerInput));}} style={{display:'flex',gap:6,alignItems:'center',flex:1}}>
             <input value={tickerInput} onChange={e=>setTickerInput(e.target.value.toUpperCase())}
-              style={{flex:1,maxWidth:130,background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.08)',borderRadius:6,padding:'7px 10px',fontSize:12,color:'#ddd',fontFamily:'monospace',outline:'none',WebkitAppearance:'none'}}
+              style={{flex:1,maxWidth:130,background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.08)',borderRadius:6,padding:'7px 10px',fontSize:15,color:'#ddd',fontFamily:'monospace',outline:'none',WebkitAppearance:'none'}}
               placeholder="AAPL, RELIANCE.NS..."/>
-            <button type="submit" style={{fontSize:10,color:'#888',background:'transparent',border:'1px solid rgba(255,255,255,.08)',borderRadius:5,padding:'7px 10px',cursor:'pointer',fontFamily:'monospace',WebkitTapHighlightColor:'transparent'}}>go</button>
-            {activeSym!=='MARKET'&&<><span style={{fontSize:10,color:'#22c55e',fontFamily:'monospace'}}>{activeSym}</span><button onClick={()=>{setTickerInput('');fetchNews('MARKET');}} style={{fontSize:10,color:'#555',background:'transparent',border:'none',cursor:'pointer',padding:'0 4px',WebkitTapHighlightColor:'transparent'}}>x</button></>}
+            <button type="submit" style={{fontSize:15,color:'#888',background:'transparent',border:'1px solid rgba(255,255,255,.08)',borderRadius:5,padding:'7px 10px',cursor:'pointer',fontFamily:'monospace',WebkitTapHighlightColor:'transparent'}}>go</button>
+            {activeSym!=='MARKET'&&<><span style={{fontSize:15,color:'#22c55e',fontFamily:'monospace'}}>{activeSym}</span><button onClick={()=>{setTickerInput('');fetchNews('MARKET');}} style={{fontSize:15,color:'#555',background:'transparent',border:'none',cursor:'pointer',padding:'0 4px',WebkitTapHighlightColor:'transparent'}}>x</button></>}
           </form>
-          <input style={{flex:1,maxWidth:120,background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.1)',borderRadius:5,padding:'7px 10px',fontSize:11,color:'#888',fontFamily:'monospace',outline:'none',WebkitAppearance:'none'}}
+          <input style={{flex:1,maxWidth:120,background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.1)',borderRadius:5,padding:'7px 10px',fontSize:15,color:'#888',fontFamily:'monospace',outline:'none',WebkitAppearance:'none'}}
             placeholder="filter..." value={search} onChange={e=>setSearch(e.target.value)}/>
-          <button onClick={()=>fetchNews(activeSym)} disabled={loading} style={{fontSize:10,color:loading?'#1e1e1e':'#444',background:'transparent',border:'1px solid rgba(255,255,255,.1)',borderRadius:5,padding:'7px 10px',cursor:loading?'not-allowed':'pointer',fontFamily:'monospace',WebkitTapHighlightColor:'transparent'}}>
+          <button onClick={()=>fetchNews(activeSym)} disabled={loading} style={{fontSize:15,color:loading?'#1e1e1e':'#444',background:'transparent',border:'1px solid rgba(255,255,255,.1)',borderRadius:5,padding:'7px 10px',cursor:loading?'not-allowed':'pointer',fontFamily:'monospace',WebkitTapHighlightColor:'transparent'}}>
             <span style={loading?{display:'inline-block',animation:'spin .8s linear infinite'}:{}}>r</span>
           </button>
         </div>
         <div style={{display:'flex',overflowX:'auto',padding:'0 12px',WebkitOverflowScrolling:'touch'}}>
           {[['all','All'],['earnings','Earnings'],['tech','Tech'],['fed','Fed'],['india','India'],['ipo','IPO']].map(([tag,label])=>(
             <button key={tag} onClick={()=>setFilter(tag)}
-              style={{fontSize:10,color:filter===tag?'#ccc':'#2a2a2a',background:'transparent',border:'none',cursor:'pointer',fontFamily:'monospace',padding:'8px 10px',whiteSpace:'nowrap',borderBottom:filter===tag?'2px solid #555':'2px solid transparent',transition:'all .12s',flexShrink:0,WebkitTapHighlightColor:'transparent'}}>
+              style={{fontSize:15,color:filter===tag?'#ccc':'#2a2a2a',background:'transparent',border:'none',cursor:'pointer',fontFamily:'monospace',padding:'8px 10px',whiteSpace:'nowrap',borderBottom:filter===tag?'2px solid #555':'2px solid transparent',transition:'all .12s',flexShrink:0,WebkitTapHighlightColor:'transparent'}}>
               {label}
             </button>
           ))}
@@ -764,22 +766,22 @@ function NewsFeed({initialSym='MARKET',dark=true}){
 
       <div style={{padding:'12px 16px'}}>
         <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
-          <span style={{display:'inline-flex',alignItems:'center',gap:6,fontSize:10,fontFamily:'monospace'}}>
+          <span style={{display:'inline-flex',alignItems:'center',gap:6,fontSize:15,fontFamily:'monospace'}}>
             <span style={{width:4,height:4,borderRadius:'50%',background:loading?'#333':error?'#ef4444':'#22c55e',animation:(!loading&&!error&&articles.length)?'pulse 2s infinite':'none'}}/>
             <span style={{color:loading?'#333':error?'#ef4444':'#22c55e'}}>{loading?'loading...':error?'error':articles.length?'live':'idle'}</span>
             {freshLabel&&!loading&&<span style={{color:'#555'}}> · updated {freshLabel}</span>}
           </span>
-          <span style={{fontSize:9,color:'#555',fontFamily:'monospace'}}>{ts}</span>
+          <span style={{fontSize:15,color:'#555',fontFamily:'monospace'}}>{ts}</span>
         </div>
 
         {!loading&&!error&&articles.length>0&&(
-          <div style={{fontSize:9,color:'#555',fontFamily:'monospace',marginBottom:10}}>tap any headline to see what it means</div>
+          <div style={{fontSize:15,color:'#555',fontFamily:'monospace',marginBottom:10}}>tap any headline to see what it means</div>
         )}
 
         {!loading&&error&&(
           <div style={{textAlign:'center',padding:'40px 20px'}}>
-            <div style={{fontSize:12,color:'#555',marginBottom:12,fontFamily:'monospace'}}>{error}</div>
-            <button onClick={()=>fetchNews(activeSym)} style={{padding:'8px 16px',background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.08)',borderRadius:6,color:'#888',fontSize:11,fontFamily:'monospace',cursor:'pointer',WebkitTapHighlightColor:'transparent'}}>retry</button>
+            <div style={{fontSize:15,color:'#555',marginBottom:12,fontFamily:'monospace'}}>{error}</div>
+            <button onClick={()=>fetchNews(activeSym)} style={{padding:'8px 16px',background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.08)',borderRadius:6,color:'#888',fontSize:15,fontFamily:'monospace',cursor:'pointer',WebkitTapHighlightColor:'transparent'}}>retry</button>
           </div>
         )}
 
@@ -800,7 +802,7 @@ function NewsFeed({initialSym='MARKET',dark=true}){
           </>
         )}
 
-        {!loading&&!error&&articles.length>0&&visible.length===0&&<div style={{textAlign:'center',padding:'40px',color:'#444',fontSize:11,fontFamily:'monospace'}}>no results — try a different filter</div>}
+        {!loading&&!error&&articles.length>0&&visible.length===0&&<div style={{textAlign:'center',padding:'40px',color:'#444',fontSize:15,fontFamily:'monospace'}}>no results — try a different filter</div>}
 
         {!loading&&!error&&hero&&(
           <div onClick={()=>openArticle(hero)}
@@ -808,12 +810,12 @@ function NewsFeed({initialSym='MARKET',dark=true}){
             onMouseEnter={e=>e.currentTarget.style.borderColor='rgba(255,255,255,.13)'}
             onMouseLeave={e=>e.currentTarget.style.borderColor='rgba(255,255,255,.12)'}>
             <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:8,flexWrap:'wrap'}}>
-              <span style={{fontSize:9,color:'#555',letterSpacing:'.08em',textTransform:'uppercase',fontFamily:'monospace'}}>{hero.source}</span>
+              <span style={{fontSize:15,color:'#555',letterSpacing:'.08em',textTransform:'uppercase',fontFamily:'monospace'}}>{hero.source}</span>
               <Tag cls={hero.tagMeta.cls} label={hero.tagMeta.label}/>
-              <span style={{fontSize:9,color:'#444',fontFamily:'monospace',marginLeft:'auto'}}>{hero.time}</span>
+              <span style={{fontSize:15,color:'#444',fontFamily:'monospace',marginLeft:'auto'}}>{hero.time}</span>
             </div>
             <div style={{fontSize:'clamp(15px,3vw,18px)',fontWeight:700,color:'#f5f5f5',lineHeight:1.35,marginBottom:10,fontFamily:'Georgia,serif'}}>{hero.title}</div>
-            {hero.desc&&<div style={{fontSize:'clamp(11px,2vw,13px)',color:'#555',lineHeight:1.7,marginBottom:12}}>{hero.desc}</div>}
+            {hero.desc&&<div style={{fontSize:'clamp(13px,2vw,15px)',color:'#555',lineHeight:1.7,marginBottom:12}}>{hero.desc}</div>}
             <SentimentBar score={hero.score||50} label={hero.label||'Mixed'} color={hero.color||'#f59e0b'}/>
           </div>
         )}
@@ -825,10 +827,10 @@ function NewsFeed({initialSym='MARKET',dark=true}){
                 style={{background:dark?'#0d0d18':'#ffffff',padding:'14px',display:'flex',flexDirection:'column',gap:6,cursor:'pointer',transition:'background .12s',WebkitTapHighlightColor:'transparent'}}
                 onMouseEnter={e=>e.currentTarget.style.background=dark?'#13131e':'#f5f5f2'}
                 onMouseLeave={e=>e.currentTarget.style.background=dark?'#0d0d18':'#ffffff'}>
-                <div style={{fontSize:9,color:'#444',letterSpacing:'.06em',textTransform:'uppercase',fontFamily:'monospace'}}>{a.source}</div>
-                <div style={{fontSize:'clamp(11px,2vw,12px)',fontWeight:600,color:'#ddd',lineHeight:1.42,fontFamily:'Georgia,serif',flex:1}}>{a.title}</div>
+                <div style={{fontSize:15,color:'#444',letterSpacing:'.06em',textTransform:'uppercase',fontFamily:'monospace'}}>{a.source}</div>
+                <div style={{fontSize:'clamp(15px,2vw,17px)',fontWeight:600,color:'#ddd',lineHeight:1.42,fontFamily:'Georgia,serif',flex:1}}>{a.title}</div>
                 <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',paddingTop:4}}>
-                  <span style={{fontSize:9,color:'#444',fontFamily:'monospace'}}>{a.time}</span>
+                  <span style={{fontSize:15,color:'#444',fontFamily:'monospace'}}>{a.time}</span>
                   <Tag cls={a.tagMeta.cls} label={a.tagMeta.label}/>
                 </div>
                 <div style={{height:1.5,background:'rgba(255,255,255,.08)',borderRadius:1}}>
@@ -845,17 +847,17 @@ function NewsFeed({initialSym='MARKET',dark=true}){
             onMouseEnter={e=>e.currentTarget.style.borderColor='rgba(255,255,255,.1)'}
             onMouseLeave={e=>e.currentTarget.style.borderColor='rgba(255,255,255,.09)'}>
             <div>
-              <div style={{fontSize:9,color:'#444',letterSpacing:'.06em',textTransform:'uppercase',fontFamily:'monospace',marginBottom:3}}>{a.source}</div>
-              <div style={{fontSize:'clamp(11px,2vw,12px)',fontWeight:600,color:'#ccc',lineHeight:1.38,fontFamily:'Georgia,serif'}}>{a.title}</div>
+              <div style={{fontSize:15,color:'#444',letterSpacing:'.06em',textTransform:'uppercase',fontFamily:'monospace',marginBottom:3}}>{a.source}</div>
+              <div style={{fontSize:'clamp(15px,2vw,17px)',fontWeight:600,color:'#ccc',lineHeight:1.38,fontFamily:'Georgia,serif'}}>{a.title}</div>
             </div>
             <div style={{display:'flex',flexDirection:'column',alignItems:'flex-end',gap:5}}>
-              <span style={{fontSize:9,color:'#444',fontFamily:'monospace',whiteSpace:'nowrap'}}>{a.time}</span>
+              <span style={{fontSize:15,color:'#444',fontFamily:'monospace',whiteSpace:'nowrap'}}>{a.time}</span>
               <Tag cls={a.tagMeta.cls} label={a.tagMeta.label}/>
             </div>
           </div>
         ))}
 
-        {!loading&&!error&&articles.length>0&&<div style={{fontSize:9,color:'#333',fontFamily:'monospace',textAlign:'center',paddingTop:14}}>stoxify · sentiment is indicative only · not financial advice</div>}
+        {!loading&&!error&&articles.length>0&&<div style={{fontSize:15,color:'#333',fontFamily:'monospace',textAlign:'center',paddingTop:14}}>stoxify · sentiment is indicative only · not financial advice</div>}
       </div>
     </div>
   );
@@ -886,20 +888,20 @@ function Watchlist({onSearch,dark=true}){
     <div style={{background:dark?'#07070f':'#f8f8f5',minHeight:'calc(100vh - 44px)',padding:'20px 16px',maxWidth:640,margin:'0 auto',color:dark?'#f0f0f0':'#111',fontFamily:'sans-serif'}}>
       <div style={{marginBottom:20}}>
         <h2 style={{fontFamily:'Georgia,serif',fontSize:'clamp(18px,4vw,22px)',fontWeight:700,color:'#e8e8e8',marginBottom:6}}>Watchlist</h2>
-        <p style={{fontSize:11,color:'#444',fontFamily:'monospace',lineHeight:1.6}}>US stocks: AAPL, NVDA · Indian stocks: RELIANCE.NS, TCS.NS, INFY.NS</p>
+        <p style={{fontSize:15,color:'#444',fontFamily:'monospace',lineHeight:1.6}}>US stocks: AAPL, NVDA · Indian stocks: RELIANCE.NS, TCS.NS, INFY.NS</p>
       </div>
       <div style={{display:'flex',gap:8,marginBottom:14}}>
         <input value={input} onChange={e=>setInput(e.target.value.toUpperCase())} onKeyDown={e=>e.key==='Enter'&&add()}
-          style={{flex:1,background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.08)',borderRadius:8,padding:'10px 12px',fontSize:13,color:'#ddd',fontFamily:'monospace',outline:'none',WebkitAppearance:'none'}}
+          style={{flex:1,background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.08)',borderRadius:8,padding:'10px 12px',fontSize:15,color:'#ddd',fontFamily:'monospace',outline:'none',WebkitAppearance:'none'}}
           placeholder="Add ticker..."/>
-        <button onClick={add} style={{fontSize:13,color:'#07070f',background:'#ddd',border:'none',borderRadius:8,padding:'10px 18px',cursor:'pointer',fontWeight:700,WebkitTapHighlightColor:'transparent'}}>+</button>
+        <button onClick={add} style={{fontSize:15,color:'#07070f',background:'#ddd',border:'none',borderRadius:8,padding:'10px 18px',cursor:'pointer',fontWeight:700,WebkitTapHighlightColor:'transparent'}}>+</button>
       </div>
       <div style={{marginBottom:16}}>
-        <div style={{fontSize:9,color:'#444',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:8}}>QUICK ADD</div>
+        <div style={{fontSize:15,color:'#444',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:8}}>QUICK ADD</div>
         <div style={{display:'flex',gap:6,flexWrap:'wrap'}}>
           {QUICK.map(s=>(
             <button key={s} onClick={()=>{if(!list.includes(s))save([...list,s]);}}
-              style={{fontSize:10,color:list.includes(s)?'#22c55e':'#333',background:'rgba(255,255,255,.03)',border:'1px solid '+(list.includes(s)?'rgba(34,197,94,.15)':'rgba(255,255,255,.1)'),borderRadius:5,padding:'5px 10px',cursor:'pointer',fontFamily:'monospace',WebkitTapHighlightColor:'transparent'}}>
+              style={{fontSize:15,color:list.includes(s)?'#22c55e':'#333',background:'rgba(255,255,255,.03)',border:'1px solid '+(list.includes(s)?'rgba(34,197,94,.15)':'rgba(255,255,255,.1)'),borderRadius:5,padding:'5px 10px',cursor:'pointer',fontFamily:'monospace',WebkitTapHighlightColor:'transparent'}}>
               {s}
             </button>
           ))}
@@ -907,7 +909,7 @@ function Watchlist({onSearch,dark=true}){
       </div>
       {list.length===0&&(
         <div style={{textAlign:'center',padding:'60px 20px'}}>
-          <div style={{fontSize:13,color:'#444',marginBottom:8,fontFamily:'monospace'}}>no stocks saved yet</div>
+          <div style={{fontSize:15,color:'#444',marginBottom:8,fontFamily:'monospace'}}>no stocks saved yet</div>
         </div>
       )}
       {list.map(sym=>{
@@ -916,12 +918,12 @@ function Watchlist({onSearch,dark=true}){
           <div key={sym} style={{display:'grid',gridTemplateColumns:'1fr auto auto auto',gap:10,alignItems:'center',background:'#0d0d18',border:'1px solid rgba(255,255,255,.09)',borderRadius:10,padding:'14px',marginBottom:2,transition:'border-color .15s'}}
             onMouseEnter={e=>e.currentTarget.style.borderColor='rgba(255,255,255,.1)'}
             onMouseLeave={e=>e.currentTarget.style.borderColor='rgba(255,255,255,.09)'}>
-            <div style={{fontSize:'clamp(12px,2.5vw,14px)',fontWeight:700,color:'#ddd',fontFamily:'monospace'}}>{sym}</div>
-            <div style={{fontSize:'clamp(12px,2.5vw,13px)',color:'#999',fontFamily:'monospace'}}>{loading?'...':p&&p.price!=='N/A'?p.price:'--'}</div>
-            <div style={{fontSize:12,fontWeight:600,fontFamily:'monospace',color:p&&p.up?'#22c55e':'#ef4444',minWidth:55,textAlign:'right'}}>{p&&p.changePercent!=='N/A'?p.changePercent:''}</div>
+            <div style={{fontSize:'clamp(14px,2.5vw,15px)',fontWeight:700,color:'#ddd',fontFamily:'monospace'}}>{sym}</div>
+            <div style={{fontSize:'clamp(14px,2.5vw,15px)',color:'#999',fontFamily:'monospace'}}>{loading?'...':p&&p.price!=='N/A'?p.price:'--'}</div>
+            <div style={{fontSize:15,fontWeight:600,fontFamily:'monospace',color:p&&p.up?'#22c55e':'#ef4444',minWidth:55,textAlign:'right'}}>{p&&p.changePercent!=='N/A'?p.changePercent:''}</div>
             <div style={{display:'flex',gap:6}}>
-              <button onClick={()=>onSearch(sym)} style={{fontSize:10,color:'#555',background:'transparent',border:'1px solid rgba(255,255,255,.12)',borderRadius:5,padding:'5px 8px',cursor:'pointer',fontFamily:'monospace',WebkitTapHighlightColor:'transparent'}}>news</button>
-              <button onClick={()=>remove(sym)} style={{fontSize:10,color:'#888',background:'transparent',border:'1px solid rgba(255,255,255,.09)',borderRadius:5,padding:'5px 7px',cursor:'pointer',fontFamily:'monospace',WebkitTapHighlightColor:'transparent'}}>x</button>
+              <button onClick={()=>onSearch(sym)} style={{fontSize:15,color:'#555',background:'transparent',border:'1px solid rgba(255,255,255,.12)',borderRadius:5,padding:'5px 8px',cursor:'pointer',fontFamily:'monospace',WebkitTapHighlightColor:'transparent'}}>news</button>
+              <button onClick={()=>remove(sym)} style={{fontSize:15,color:'#888',background:'transparent',border:'1px solid rgba(255,255,255,.09)',borderRadius:5,padding:'5px 7px',cursor:'pointer',fontFamily:'monospace',WebkitTapHighlightColor:'transparent'}}>x</button>
             </div>
           </div>
         );
@@ -984,15 +986,15 @@ function Compare({dark=true}){
       <div style={{maxWidth:960,margin:'0 auto'}}>
         <div style={{marginBottom:18}}>
           <h2 style={{fontFamily:'Georgia,serif',fontSize:'clamp(18px,4vw,22px)',fontWeight:700,color:'#e8e8e8',marginBottom:4}}>Compare</h2>
-          <p style={{fontSize:11,color:'#444',fontFamily:'monospace'}}>Up to 3 stocks side by side · US: AAPL · India: RELIANCE.NS, TCS.NS</p>
+          <p style={{fontSize:15,color:'#444',fontFamily:'monospace'}}>Up to 3 stocks side by side · US: AAPL · India: RELIANCE.NS, TCS.NS</p>
         </div>
-        {priceErr&&<div style={{fontSize:10,color:'#f59e0b',fontFamily:'monospace',background:'rgba(245,158,11,.07)',border:'1px solid rgba(245,158,11,.15)',borderRadius:6,padding:'8px 12px',marginBottom:14}}>{priceErr}</div>}
+        {priceErr&&<div style={{fontSize:15,color:'#f59e0b',fontFamily:'monospace',background:'rgba(245,158,11,.07)',border:'1px solid rgba(245,158,11,.15)',borderRadius:6,padding:'8px 12px',marginBottom:14}}>{priceErr}</div>}
         <div style={{display:'flex',gap:8,marginBottom:16,flexWrap:'wrap'}}>
           <input value={input} onChange={e=>setInput(e.target.value.toUpperCase())} onKeyDown={e=>e.key==='Enter'&&add()}
-            style={{flex:1,minWidth:120,background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.08)',borderRadius:8,padding:'9px 12px',fontSize:12,color:'#ddd',fontFamily:'monospace',outline:'none',WebkitAppearance:'none'}}
+            style={{flex:1,minWidth:120,background:'rgba(255,255,255,.08)',border:'1px solid rgba(255,255,255,.08)',borderRadius:8,padding:'9px 12px',fontSize:15,color:'#ddd',fontFamily:'monospace',outline:'none',WebkitAppearance:'none'}}
             placeholder="Add ticker..."/>
-          <button onClick={add} disabled={stocks.length>=3} style={{fontSize:11,color:stocks.length>=3?'#222':'#07070f',background:stocks.length>=3?'rgba(255,255,255,.03)':'#ddd',border:'none',borderRadius:8,padding:'9px 16px',cursor:stocks.length>=3?'not-allowed':'pointer',fontWeight:700,WebkitTapHighlightColor:'transparent'}}>{stocks.length>=3?'max 3':'+Add'}</button>
-          <button onClick={()=>load(stocks)} disabled={loading} style={{fontSize:11,color:'#555',background:'transparent',border:'1px solid rgba(255,255,255,.12)',borderRadius:8,padding:'9px 14px',cursor:'pointer',fontFamily:'monospace',WebkitTapHighlightColor:'transparent'}}>
+          <button onClick={add} disabled={stocks.length>=3} style={{fontSize:15,color:stocks.length>=3?'#222':'#07070f',background:stocks.length>=3?'rgba(255,255,255,.03)':'#ddd',border:'none',borderRadius:8,padding:'9px 16px',cursor:stocks.length>=3?'not-allowed':'pointer',fontWeight:700,WebkitTapHighlightColor:'transparent'}}>{stocks.length>=3?'max 3':'+Add'}</button>
+          <button onClick={()=>load(stocks)} disabled={loading} style={{fontSize:15,color:'#555',background:'transparent',border:'1px solid rgba(255,255,255,.12)',borderRadius:8,padding:'9px 14px',cursor:'pointer',fontFamily:'monospace',WebkitTapHighlightColor:'transparent'}}>
             <span style={loading?{display:'inline-block',animation:'spin .8s linear infinite'}:{}}>r</span>
           </button>
         </div>
@@ -1004,23 +1006,23 @@ function Compare({dark=true}){
               <div key={sym} style={{background:'#0d0d18',border:'1px solid rgba(255,255,255,.1)',borderRadius:10,overflow:'hidden'}}>
                 <div style={{padding:'12px 14px',borderBottom:'1px solid rgba(255,255,255,.09)',background:'#0a0a14',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
                   <div>
-                    <div style={{fontSize:'clamp(12px,2.5vw,14px)',fontWeight:700,color:'#ddd',fontFamily:'monospace'}}>{sym}</div>
-                    <div style={{fontSize:9,color:'#444',fontFamily:'monospace',marginTop:2}}>{p&&p.price!=='N/A'?'live':'--'}</div>
+                    <div style={{fontSize:'clamp(14px,2.5vw,15px)',fontWeight:700,color:'#ddd',fontFamily:'monospace'}}>{sym}</div>
+                    <div style={{fontSize:15,color:'#444',fontFamily:'monospace',marginTop:2}}>{p&&p.price!=='N/A'?'live':'--'}</div>
                   </div>
-                  <button onClick={()=>remove(sym)} style={{fontSize:11,color:'#555',background:'transparent',border:'none',cursor:'pointer',WebkitTapHighlightColor:'transparent'}}>x</button>
+                  <button onClick={()=>remove(sym)} style={{fontSize:15,color:'#555',background:'transparent',border:'none',cursor:'pointer',WebkitTapHighlightColor:'transparent'}}>x</button>
                 </div>
                 <div style={{padding:'14px',borderBottom:'1px solid rgba(255,255,255,.08)'}}>
                   <div style={{fontSize:'clamp(18px,4vw,22px)',fontWeight:700,color:'#e8e8e8',fontFamily:'monospace',marginBottom:3}}>{loading?'...':p&&p.price!=='N/A'?p.price:'--'}</div>
-                  <div style={{fontSize:12,fontWeight:600,fontFamily:'monospace',color:p&&p.up?'#22c55e':'#ef4444'}}>{p&&p.changePercent!=='N/A'?p.changePercent:''}</div>
-                  <div style={{fontSize:10,color:'#444',fontFamily:'monospace',marginTop:3}}>{p&&p.change!=='N/A'?p.change+' today':''}</div>
+                  <div style={{fontSize:15,fontWeight:600,fontFamily:'monospace',color:p&&p.up?'#22c55e':'#ef4444'}}>{p&&p.changePercent!=='N/A'?p.changePercent:''}</div>
+                  <div style={{fontSize:15,color:'#444',fontFamily:'monospace',marginTop:3}}>{p&&p.change!=='N/A'?p.change+' today':''}</div>
                 </div>
                 <div style={{padding:'12px 14px'}}>
-                  <div style={{fontSize:9,color:'#444',fontFamily:'monospace',letterSpacing:'0.07em',marginBottom:10}}>LATEST NEWS</div>
-                  {n.length===0&&<div style={{fontSize:10,color:'#555',fontFamily:'monospace'}}>no news</div>}
+                  <div style={{fontSize:15,color:'#444',fontFamily:'monospace',letterSpacing:'0.07em',marginBottom:10}}>LATEST NEWS</div>
+                  {n.length===0&&<div style={{fontSize:15,color:'#555',fontFamily:'monospace'}}>no news</div>}
                   {n.map((a,i)=>(
                     <div key={i} style={{marginBottom:10,paddingBottom:10,borderBottom:i<n.length-1?'1px solid rgba(255,255,255,.08)':'none'}}>
-                      <div style={{fontSize:'clamp(11px,2vw,12px)',fontWeight:500,color:'#999',lineHeight:1.45,fontFamily:'Georgia,serif',marginBottom:4}}>{a.headline}</div>
-                      <span style={{fontSize:9,color:'#444',fontFamily:'monospace'}}>{a.source}</span>
+                      <div style={{fontSize:'clamp(15px,2vw,17px)',fontWeight:500,color:'#999',lineHeight:1.45,fontFamily:'Georgia,serif',marginBottom:4}}>{a.headline}</div>
+                      <span style={{fontSize:15,color:'#444',fontFamily:'monospace'}}>{a.source}</span>
                     </div>
                   ))}
                 </div>
@@ -1100,11 +1102,11 @@ function Briefing({dark=true}){
     const name = p.symbol==='^NSEI'?'Nifty 50':p.symbol==='^GSPC'?'S&P 500':p.symbol==='^DJI'?'Dow Jones':'NASDAQ';
     return (
       <div style={{background:'#0d0d18',border:'1px solid rgba(255,255,255,.09)',borderRadius:10,padding:'16px 18px'}}>
-        <div style={{fontSize:9,color:'#444',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:10,textTransform:'uppercase'}}>{name}</div>
+        <div style={{fontSize:15,color:'#444',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:10,textTransform:'uppercase'}}>{name}</div>
         <div style={{fontSize:'clamp(20px,4vw,26px)',fontWeight:700,color:'#e8e8e8',fontFamily:'monospace',marginBottom:4}}>{p.price}</div>
         <div style={{display:'flex',alignItems:'center',gap:6}}>
-          <span style={{fontSize:13,fontWeight:600,fontFamily:'monospace',color:p.up?'#22c55e':'#ef4444'}}>{p.changePercent}</span>
-          <span style={{fontSize:10,color:'#444',fontFamily:'monospace'}}>{p.change} today</span>
+          <span style={{fontSize:15,fontWeight:600,fontFamily:'monospace',color:p.up?'#22c55e':'#ef4444'}}>{p.changePercent}</span>
+          <span style={{fontSize:15,color:'#444',fontFamily:'monospace'}}>{p.change} today</span>
         </div>
       </div>
     );
@@ -1114,10 +1116,10 @@ function Briefing({dark=true}){
     if(!p||p.price==='N/A') return null;
     return (
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'10px 0',borderBottom:'1px solid rgba(255,255,255,.04)'}}>
-        <span style={{fontSize:12,fontWeight:700,color:'#ccc',fontFamily:'monospace'}}>{p.symbol.replace('.NS','')}</span>
+        <span style={{fontSize:15,fontWeight:700,color:'#ccc',fontFamily:'monospace'}}>{p.symbol.replace('.NS','')}</span>
         <div style={{display:'flex',alignItems:'center',gap:12}}>
-          <span style={{fontSize:12,color:'#888',fontFamily:'monospace'}}>{p.price}</span>
-          <span style={{fontSize:12,fontWeight:600,fontFamily:'monospace',color:p.up?'#22c55e':'#ef4444',minWidth:60,textAlign:'right'}}>{p.changePercent}</span>
+          <span style={{fontSize:15,color:'#888',fontFamily:'monospace'}}>{p.price}</span>
+          <span style={{fontSize:15,fontWeight:600,fontFamily:'monospace',color:p.up?'#22c55e':'#ef4444',minWidth:60,textAlign:'right'}}>{p.changePercent}</span>
         </div>
       </div>
     );
@@ -1129,22 +1131,22 @@ function Briefing({dark=true}){
 
         {/* Stock search */}
         <div style={{marginBottom:28}}>
-          <div style={{fontSize:9,color:'#333',fontFamily:'monospace',letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:10}}>Stock lookup</div>
+          <div style={{fontSize:15,color:'#333',fontFamily:'monospace',letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:10}}>Stock lookup</div>
           <div style={{display:'flex',gap:8,marginBottom:8}}>
             <input value={stockInput} onChange={e=>setStockInput(e.target.value.toUpperCase())}
               onKeyDown={e=>e.key==='Enter'&&searchStock(stockInput)}
-              style={{flex:1,background:dark?'rgba(255,255,255,.06)':'rgba(0,0,0,.05)',border:`1px solid ${dark?'rgba(255,255,255,.1)':'rgba(0,0,0,.1)'}`,borderRadius:8,padding:'10px 14px',fontSize:13,color:dark?'#ddd':'#111',fontFamily:'monospace',outline:'none',WebkitAppearance:'none'}}
+              style={{flex:1,background:dark?'rgba(255,255,255,.06)':'rgba(0,0,0,.05)',border:`1px solid ${dark?'rgba(255,255,255,.1)':'rgba(0,0,0,.1)'}`,borderRadius:8,padding:'10px 14px',fontSize:15,color:dark?'#ddd':'#111',fontFamily:'monospace',outline:'none',WebkitAppearance:'none'}}
               placeholder="AAPL, RELIANCE, NIFTY..."/>
             <button onClick={()=>searchStock(stockInput)}
-              style={{fontSize:12,color:dark?'#07070f':'#fff',background:dark?'#ddd':'#111',border:'none',borderRadius:8,padding:'10px 20px',cursor:'pointer',fontWeight:700,WebkitTapHighlightColor:'transparent'}}>
+              style={{fontSize:15,color:dark?'#07070f':'#fff',background:dark?'#ddd':'#111',border:'none',borderRadius:8,padding:'10px 20px',cursor:'pointer',fontWeight:700,WebkitTapHighlightColor:'transparent'}}>
               Search
             </button>
             {stockData&&<button onClick={()=>setStockData(null)}
-              style={{fontSize:11,color:'#444',background:'transparent',border:`1px solid ${dark?'rgba(255,255,255,.08)':'rgba(0,0,0,.08)'}`,borderRadius:8,padding:'10px 14px',cursor:'pointer',fontFamily:'monospace',WebkitTapHighlightColor:'transparent'}}>
+              style={{fontSize:15,color:'#444',background:'transparent',border:`1px solid ${dark?'rgba(255,255,255,.08)':'rgba(0,0,0,.08)'}`,borderRadius:8,padding:'10px 14px',cursor:'pointer',fontFamily:'monospace',WebkitTapHighlightColor:'transparent'}}>
               clear
             </button>}
           </div>
-          <div style={{fontSize:10,color:'#2a2a2a',fontFamily:'monospace'}}>
+          <div style={{fontSize:15,color:'#2a2a2a',fontFamily:'monospace'}}>
             US: AAPL, NVDA, TSLA · Indian: RELIANCE, TCS, INFY · Indices: NIFTY, SENSEX
           </div>
         </div>
@@ -1156,14 +1158,14 @@ function Briefing({dark=true}){
             {/* Header */}
             <div style={{background:dark?'#0a0a14':'#f0f0ec',padding:'14px 18px',borderBottom:`1px solid ${dark?'rgba(255,255,255,.06)':'rgba(0,0,0,.06)'}`,display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:8}}>
               <div>
-                <div style={{fontSize:9,color:'#444',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:3}}>STOCK ANALYSIS</div>
+                <div style={{fontSize:15,color:'#444',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:3}}>STOCK ANALYSIS</div>
                 <div style={{fontSize:16,fontWeight:700,color:dark?'#ddd':'#111',fontFamily:'monospace'}}>{stockData.sym}</div>
-                {stockData.info?.name&&stockData.info.name!==stockData.sym&&<div style={{fontSize:11,color:'#555',fontFamily:'monospace',marginTop:2}}>{stockData.info.name}</div>}
+                {stockData.info?.name&&stockData.info.name!==stockData.sym&&<div style={{fontSize:15,color:'#555',fontFamily:'monospace',marginTop:2}}>{stockData.info.name}</div>}
               </div>
-              {stockData.loading&&<div style={{fontSize:11,color:'#444',fontFamily:'monospace',animation:'pulse 1s infinite'}}>loading...</div>}
+              {stockData.loading&&<div style={{fontSize:15,color:'#444',fontFamily:'monospace',animation:'pulse 1s infinite'}}>loading...</div>}
               {!stockData.loading&&stockData.info?.signal&&stockData.info.signal!=='N/A'&&(
                 <div style={{textAlign:'right'}}>
-                  <div style={{fontSize:9,color:'#333',fontFamily:'monospace',marginBottom:4}}>SIGNAL</div>
+                  <div style={{fontSize:15,color:'#333',fontFamily:'monospace',marginBottom:4}}>SIGNAL</div>
                   <div style={{fontSize:15,fontWeight:700,fontFamily:'monospace',color:stockData.info.signal==='BUY'?'#22c55e':stockData.info.signal==='SELL'?'#ef4444':'#f59e0b',padding:'4px 12px',background:stockData.info.signal==='BUY'?'rgba(34,197,94,.1)':stockData.info.signal==='SELL'?'rgba(239,68,68,.1)':'rgba(245,158,11,.1)',borderRadius:6,border:`1px solid ${stockData.info.signal==='BUY'?'rgba(34,197,94,.2)':stockData.info.signal==='SELL'?'rgba(239,68,68,.2)':'rgba(245,158,11,.2)'}`}}>{stockData.info.signal}</div>
                 </div>
               )}
@@ -1177,33 +1179,34 @@ function Briefing({dark=true}){
                     <div>
                       <div style={{fontSize:'clamp(26px,5vw,34px)',fontWeight:700,color:dark?'#e8e8e8':'#111',fontFamily:'monospace',lineHeight:1,marginBottom:6}}>
                         {stockData.info.currentPrice?stockData.info.currentPrice.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):'N/A'}
-                        <span style={{fontSize:11,color:'#444',fontFamily:'monospace',marginLeft:6}}>{stockData.info.currency}</span>
+                        <span style={{fontSize:15,color:'#444',fontFamily:'monospace',marginLeft:6}}>{stockData.info.currency}</span>
                       </div>
                       <div style={{display:'flex',alignItems:'center',gap:8}}>
-                        <span style={{fontSize:14,fontWeight:600,fontFamily:'monospace',color:stockData.info.changePct>=0?'#22c55e':'#ef4444'}}>
+                        <span style={{fontSize:15,fontWeight:600,fontFamily:'monospace',color:stockData.info.changePct>=0?'#22c55e':'#ef4444'}}>
                           {stockData.info.changePct>=0?'+':''}{(stockData.info.changePct*100).toFixed(2)}%
                         </span>
-                        <span style={{fontSize:12,color:'#444',fontFamily:'monospace'}}>
+                        <span style={{fontSize:15,color:'#444',fontFamily:'monospace'}}>
                           {stockData.info.change>=0?'+':''}{stockData.info.change?.toFixed(2)} today
                         </span>
                       </div>
                     </div>
                     {/* Sentiment bar */}
                     <div style={{minWidth:120}}>
-                      <div style={{fontSize:9,color:'#333',fontFamily:'monospace',marginBottom:6}}>SENTIMENT</div>
+                      <div style={{fontSize:15,color:'#333',fontFamily:'monospace',marginBottom:6}}>SENTIMENT</div>
                       <div style={{height:3,background:'rgba(255,255,255,.06)',borderRadius:2,marginBottom:4}}>
                         <div style={{height:'100%',width:stockData.info.sentimentScore+'%',background:stockData.info.sentimentScore>60?'#22c55e':stockData.info.sentimentScore<40?'#ef4444':'#f59e0b',borderRadius:2}}/>
                       </div>
-                      <div style={{fontSize:10,color:stockData.info.sentimentScore>60?'#22c55e':stockData.info.sentimentScore<40?'#ef4444':'#f59e0b',fontFamily:'monospace',fontWeight:600}}>{stockData.info.sentiment}</div>
+                      <div style={{fontSize:15,color:stockData.info.sentimentScore>60?'#22c55e':stockData.info.sentimentScore<40?'#ef4444':'#f59e0b',fontFamily:'monospace',fontWeight:600}}>{stockData.info.sentiment}</div>
                     </div>
                   </div>
                   {/* Signal reason */}
-                  {stockData.info.signalReason&&<div style={{fontSize:12,color:'#555',fontFamily:'Georgia,serif',lineHeight:1.7,background:dark?'rgba(255,255,255,.02)':'rgba(0,0,0,.02)',borderRadius:6,padding:'10px 12px',borderLeft:`3px solid ${stockData.info.signal==='BUY'?'#22c55e':stockData.info.signal==='SELL'?'#ef4444':'#f59e0b'}`}}>{stockData.info.signalReason}</div>}
+                  {stockData.info.signalReason&&<div style={{fontSize:15,color:'#555',fontFamily:'Georgia,serif',lineHeight:1.7,background:dark?'rgba(255,255,255,.02)':'rgba(0,0,0,.02)',borderRadius:6,padding:'10px 12px',borderLeft:`3px solid ${stockData.info.signal==='BUY'?'#22c55e':stockData.info.signal==='SELL'?'#ef4444':'#f59e0b'}`}}>{stockData.info.signalReason}</div>}
                 </div>
 
-                {/* Fundamentals grid */}
+                {/* Fundamentals grid — skip for indices */}
+                {!stockData.sym.startsWith('^')&&(
                 <div style={{padding:'14px 18px',borderBottom:`1px solid ${dark?'rgba(255,255,255,.05)':'rgba(0,0,0,.05)'}`}}>
-                  <div style={{fontSize:9,color:'#333',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:12}}>KEY STATS</div>
+                  <div style={{fontSize:15,color:'#333',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:12}}>KEY STATS</div>
                   <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(130px,1fr))',gap:12}}>
                     {[
                       {label:'Market Cap',   value:stockData.info.marketCap},
@@ -1214,17 +1217,41 @@ function Briefing({dark=true}){
                       {label:'Volume',       value:stockData.info.volume},
                       {label:'Avg Volume',   value:stockData.info.avgVolume},
                       {label:'Beta',         value:stockData.info.beta},
-                      {label:'Dividend',     value:stockData.info.dividendYield},
+                      {label:'Dividend Yield',value:stockData.info.dividendYield},
                       {label:'Target Price', value:stockData.info.targetPrice},
-                    ].map((s,i)=>(
+                    ].filter(s=>s.value&&s.value!=='N/A').map((s,i)=>(
                       <div key={i}>
-                        <div style={{fontSize:9,color:'#333',fontFamily:'monospace',marginBottom:3}}>{s.label}</div>
-                        <div style={{fontSize:13,fontWeight:600,color:dark?'#ccc':'#222',fontFamily:'monospace'}}>{s.value||'N/A'}</div>
+                        <div style={{fontSize:15,color:'#333',fontFamily:'monospace',marginBottom:3}}>{s.label}</div>
+                        <div style={{fontSize:15,fontWeight:600,color:dark?'#ccc':'#222',fontFamily:'monospace'}}>{s.value}</div>
                       </div>
                     ))}
+                    {[
+                      {label:'Market Cap',value:stockData.info.marketCap},
+                      {label:'P/E Ratio',value:stockData.info.peRatio},
+                      {label:'52W High',value:stockData.info.week52High},
+                      {label:'52W Low',value:stockData.info.week52Low},
+                      {label:'Volume',value:stockData.info.volume},
+                      {label:'Beta',value:stockData.info.beta},
+                    ].filter(s=>!s.value||s.value==='N/A').length>0&&(
+                      <div style={{gridColumn:'1/-1',fontSize:15,color:'#1e1e1e',fontFamily:'monospace',marginTop:4}}>
+                        Some fields unavailable on free data plan
+                      </div>
+                    )}
                   </div>
                 </div>
+                )}
 
+                {/* Index info */}
+                {stockData.info?.isIndex&&(
+                  <div style={{padding:'16px 18px',borderBottom:`1px solid ${dark?'rgba(255,255,255,.05)':'rgba(0,0,0,.05)'}`}}>
+                    <div style={{fontSize:15,color:'#333',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:10}}>ABOUT THIS INDEX</div>
+                    <p style={{fontSize:15,color:'#555',lineHeight:1.8,fontFamily:'Georgia,serif',marginBottom:10}}>{stockData.info.description}</p>
+                    <div style={{display:'flex',gap:16,flexWrap:'wrap'}}>
+                      <div><div style={{fontSize:15,color:'#333',fontFamily:'monospace',marginBottom:3}}>COMPONENTS</div><div style={{fontSize:15,fontWeight:600,color:dark?'#ccc':'#222',fontFamily:'monospace'}}>{stockData.info.components}</div></div>
+                      <div><div style={{fontSize:15,color:'#333',fontFamily:'monospace',marginBottom:3}}>FUNDAMENTALS</div><div style={{fontSize:15,color:'#444',fontFamily:'monospace'}}>Not available for indices</div></div>
+                    </div>
+                  </div>
+                )}
                 {/* Bull / Bear */}
                 {(()=>{
                   const tag = stockData.info.changePct>0.01?'tech':stockData.info.changePct<-0.01?'general':'general';
@@ -1232,20 +1259,20 @@ function Briefing({dark=true}){
                   const analysis = getArticleAnalysis(stockData.sym+' stock analysis', '', tag, sent);
                   return(
                     <div style={{padding:'14px 18px',borderBottom:`1px solid ${dark?'rgba(255,255,255,.05)':'rgba(0,0,0,.05)'}`}}>
-                      <div style={{fontSize:9,color:'#333',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:12}}>ANALYSIS</div>
+                      <div style={{fontSize:15,color:'#333',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:12}}>ANALYSIS</div>
                       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:2,marginBottom:12}}>
                         <div style={{background:'rgba(34,197,94,.04)',border:'1px solid rgba(34,197,94,.1)',borderRadius:8,padding:'12px'}}>
-                          <div style={{fontSize:9,color:'#22c55e',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:8}}>BULL CASE</div>
-                          <p style={{fontSize:11,color:'#555',lineHeight:1.75,margin:0,fontFamily:'Georgia,serif'}}>{analysis.bullCase}</p>
+                          <div style={{fontSize:15,color:'#22c55e',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:8}}>BULL CASE</div>
+                          <p style={{fontSize:15,color:'#555',lineHeight:1.75,margin:0,fontFamily:'Georgia,serif'}}>{analysis.bullCase}</p>
                         </div>
                         <div style={{background:'rgba(239,68,68,.04)',border:'1px solid rgba(239,68,68,.1)',borderRadius:8,padding:'12px'}}>
-                          <div style={{fontSize:9,color:'#ef4444',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:8}}>BEAR CASE</div>
-                          <p style={{fontSize:11,color:'#555',lineHeight:1.75,margin:0,fontFamily:'Georgia,serif'}}>{analysis.bearCase}</p>
+                          <div style={{fontSize:15,color:'#ef4444',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:8}}>BEAR CASE</div>
+                          <p style={{fontSize:15,color:'#555',lineHeight:1.75,margin:0,fontFamily:'Georgia,serif'}}>{analysis.bearCase}</p>
                         </div>
                       </div>
                       <div style={{background:dark?'rgba(255,255,255,.02)':'rgba(0,0,0,.02)',borderRadius:6,padding:'10px 12px',borderLeft:'3px solid #f59e0b'}}>
-                        <div style={{fontSize:9,color:'#f59e0b',fontFamily:'monospace',marginBottom:5}}>WHAT TO WATCH</div>
-                        <p style={{fontSize:11,color:'#555',lineHeight:1.75,margin:0,fontFamily:'Georgia,serif'}}>{analysis.watchNext}</p>
+                        <div style={{fontSize:15,color:'#f59e0b',fontFamily:'monospace',marginBottom:5}}>WHAT TO WATCH</div>
+                        <p style={{fontSize:15,color:'#555',lineHeight:1.75,margin:0,fontFamily:'Georgia,serif'}}>{analysis.watchNext}</p>
                       </div>
                     </div>
                   );
@@ -1253,24 +1280,24 @@ function Briefing({dark=true}){
 
                 {/* News */}
                 <div style={{padding:'14px 18px'}}>
-                  <div style={{fontSize:9,color:'#333',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:12}}>LATEST NEWS</div>
-                  {stockData.news.length===0&&<div style={{fontSize:12,color:'#333',fontFamily:'monospace'}}>no news found</div>}
+                  <div style={{fontSize:15,color:'#333',fontFamily:'monospace',letterSpacing:'0.08em',marginBottom:12}}>LATEST NEWS</div>
+                  {stockData.news.length===0&&<div style={{fontSize:15,color:'#333',fontFamily:'monospace'}}>no news found</div>}
                   {stockData.news.map((n,i)=>{
                     const sent=calcSentiment(n.headline,n.summary,n.source,'general');
                     return(
                       <div key={i} style={{paddingBottom:12,marginBottom:12,borderBottom:i<stockData.news.length-1?`1px solid ${dark?'rgba(255,255,255,.04)':'rgba(0,0,0,.05)'}`:' none'}}>
-                        <div style={{fontSize:'clamp(12px,2.5vw,13px)',fontWeight:500,color:dark?'#ccc':'#222',lineHeight:1.5,fontFamily:'Georgia,serif',marginBottom:5}}>{n.headline}</div>
+                        <div style={{fontSize:'clamp(14px,2.5vw,15px)',fontWeight:500,color:dark?'#ccc':'#222',lineHeight:1.5,fontFamily:'Georgia,serif',marginBottom:5}}>{n.headline}</div>
                         <div style={{display:'flex',alignItems:'center',gap:8}}>
-                          <span style={{fontSize:9,color:'#333',fontFamily:'monospace'}}>{n.source}</span>
-                          <span style={{fontSize:9,color:'#333',fontFamily:'monospace'}}>· {n.time}</span>
-                          <span style={{fontSize:9,color:sent.color,fontFamily:'monospace',marginLeft:'auto',fontWeight:600}}>{sent.label}</span>
+                          <span style={{fontSize:15,color:'#333',fontFamily:'monospace'}}>{n.source}</span>
+                          <span style={{fontSize:15,color:'#333',fontFamily:'monospace'}}>· {n.time}</span>
+                          <span style={{fontSize:15,color:sent.color,fontFamily:'monospace',marginLeft:'auto',fontWeight:600}}>{sent.label}</span>
                         </div>
                       </div>
                     );
                   })}
                 </div>
 
-                <div style={{padding:'10px 18px',fontSize:9,color:'#1e1e1e',fontFamily:'monospace'}}>
+                <div style={{padding:'10px 18px',fontSize:15,color:'#1e1e1e',fontFamily:'monospace'}}>
                   Analysis is rule-based and general · sentiment is indicative only · not financial advice
                 </div>
               </>
@@ -1280,12 +1307,12 @@ function Briefing({dark=true}){
 
         {/* Header */}
         <div style={{marginBottom:32}}>
-          <div style={{fontSize:9,color:'#333',fontFamily:'monospace',letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:8}}>{dateStr}</div>
+          <div style={{fontSize:15,color:'#333',fontFamily:'monospace',letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:8}}>{dateStr}</div>
           <h1 style={{fontFamily:'Georgia,serif',fontSize:'clamp(24px,4vw,36px)',fontWeight:700,color:'#e8e8e8',lineHeight:1.2,marginBottom:10}}>
             {greeting}.<br/>
             <em style={{fontStyle:'italic',fontWeight:400,color:'#444'}}>Here is what markets are doing.</em>
           </h1>
-          <div style={{display:'flex',alignItems:'center',gap:6,fontSize:10,color:'#333',fontFamily:'monospace'}}>
+          <div style={{display:'flex',alignItems:'center',gap:6,fontSize:15,color:'#333',fontFamily:'monospace'}}>
             <span style={{width:4,height:4,borderRadius:'50%',background:'#22c55e',animation:'pulse 1.8s infinite'}}/>
             Live · {timeStr} IST
           </div>
@@ -1304,13 +1331,13 @@ function Briefing({dark=true}){
 
         {/* Error */}
         {data.loaded&&data.error&&(
-          <div style={{textAlign:'center',padding:'40px',color:'#444',fontSize:12,fontFamily:'monospace'}}>could not load market data · check your connection</div>
+          <div style={{textAlign:'center',padding:'40px',color:'#444',fontSize:15,fontFamily:'monospace'}}>could not load market data · check your connection</div>
         )}
 
         {/* Indices grid */}
         {data.loaded&&!data.error&&(
           <>
-            <div style={{fontSize:9,color:'#333',fontFamily:'monospace',letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:12}}>Market indices</div>
+            <div style={{fontSize:15,color:'#333',fontFamily:'monospace',letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:12}}>Market indices</div>
             <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(150px,1fr))',gap:2,marginBottom:28}}>
               {data.indices.filter(p=>p.price!=='N/A').map((p,i)=><IndexCard key={i} p={p}/>)}
             </div>
@@ -1318,27 +1345,27 @@ function Briefing({dark=true}){
             {/* Movers */}
             {data.movers&&data.movers.filter(p=>p.price!=='N/A').length>0&&(
               <div style={{background:'#0d0d18',border:'1px solid rgba(255,255,255,.09)',borderRadius:10,padding:'18px',marginBottom:28}}>
-                <div style={{fontSize:9,color:'#333',fontFamily:'monospace',letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:14}}>Stocks to watch</div>
+                <div style={{fontSize:15,color:'#333',fontFamily:'monospace',letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:14}}>Stocks to watch</div>
                 {data.movers.filter(p=>p.price!=='N/A').map((p,i)=><MoverRow key={i} p={p}/>)}
               </div>
             )}
 
             {/* What to know today */}
             <div style={{background:'#0d0d18',border:'1px solid rgba(255,255,255,.09)',borderRadius:10,padding:'18px',marginBottom:28}}>
-              <div style={{fontSize:9,color:'#333',fontFamily:'monospace',letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:16}}>What to know today</div>
+              <div style={{fontSize:15,color:'#333',fontFamily:'monospace',letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:16}}>What to know today</div>
               {data.news.slice(0,5).map((n,i)=>{
                 const sent = calcSentiment(n.headline,n.summary,n.source,'general');
                 return (
                   <div key={i} style={{paddingBottom:14,marginBottom:14,borderBottom:i<4?'1px solid rgba(255,255,255,.04)':'none'}}>
                     <div style={{display:'flex',alignItems:'flex-start',gap:10,marginBottom:6}}>
                       <span style={{width:4,height:4,borderRadius:'50%',background:sent.color,flexShrink:0,marginTop:6}}/>
-                      <p style={{fontSize:'clamp(12px,2.5vw,14px)',color:'#ccc',lineHeight:1.5,margin:0,fontFamily:'Georgia,serif',fontWeight:500}}>{n.headline}</p>
+                      <p style={{fontSize:'clamp(14px,2.5vw,15px)',color:'#ccc',lineHeight:1.5,margin:0,fontFamily:'Georgia,serif',fontWeight:500}}>{n.headline}</p>
                     </div>
                     <div style={{display:'flex',alignItems:'center',gap:8,paddingLeft:14}}>
-                      <span style={{fontSize:9,color:'#333',fontFamily:'monospace'}}>{n.source}</span>
-                      <span style={{fontSize:9,color:'#222',fontFamily:'monospace'}}>·</span>
-                      <span style={{fontSize:9,color:'#333',fontFamily:'monospace'}}>{n.time}</span>
-                      <span style={{fontSize:9,color:sent.color,fontFamily:'monospace',marginLeft:'auto'}}>{sent.label}</span>
+                      <span style={{fontSize:15,color:'#333',fontFamily:'monospace'}}>{n.source}</span>
+                      <span style={{fontSize:15,color:'#222',fontFamily:'monospace'}}>·</span>
+                      <span style={{fontSize:15,color:'#333',fontFamily:'monospace'}}>{n.time}</span>
+                      <span style={{fontSize:15,color:sent.color,fontFamily:'monospace',marginLeft:'auto'}}>{sent.label}</span>
                     </div>
                   </div>
                 );
@@ -1348,7 +1375,7 @@ function Briefing({dark=true}){
             {/* Market mood summary */}
             {data.indices.length>0&&(
               <div style={{border:'1px solid rgba(255,255,255,.09)',borderRadius:10,padding:'18px',marginBottom:28,background:'rgba(255,255,255,.01)'}}>
-                <div style={{fontSize:9,color:'#333',fontFamily:'monospace',letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:12}}>Today at a glance</div>
+                <div style={{fontSize:15,color:'#333',fontFamily:'monospace',letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:12}}>Today at a glance</div>
                 {(()=>{
                   const nifty = data.indices.find(p=>p.symbol==='^NSEI');
                   const sp = data.indices.find(p=>p.symbol==='^GSPC');
@@ -1362,15 +1389,15 @@ function Briefing({dark=true}){
                     : 'Broad market weakness tends to hit mid and small caps harder. Quality large caps with strong balance sheets usually recover faster.';
                   return (
                     <>
-                      <p style={{fontSize:'clamp(13px,2.5vw,15px)',color:'#777',lineHeight:1.8,fontFamily:'Georgia,serif',marginBottom:12}}>{mood}</p>
-                      <p style={{fontSize:'clamp(12px,2vw,13px)',color:'#444',lineHeight:1.8,fontFamily:'Georgia,serif',borderLeft:'2px solid rgba(255,255,255,.08)',paddingLeft:12}}>{tip}</p>
+                      <p style={{fontSize:'clamp(16px,2.5vw,18px)',color:'#777',lineHeight:1.8,fontFamily:'Georgia,serif',marginBottom:12}}>{mood}</p>
+                      <p style={{fontSize:'clamp(13px,2vw,15px)',color:'#444',lineHeight:1.8,fontFamily:'Georgia,serif',borderLeft:'2px solid rgba(255,255,255,.08)',paddingLeft:12}}>{tip}</p>
                     </>
                   );
                 })()}
               </div>
             )}
 
-            <div style={{fontSize:9,color:'#1e1e1e',fontFamily:'monospace',textAlign:'center',paddingTop:8}}>
+            <div style={{fontSize:15,color:'#1e1e1e',fontFamily:'monospace',textAlign:'center',paddingTop:8}}>
               stoxify · live market data · sentiment is indicative only · not financial advice
             </div>
           </>
@@ -1413,17 +1440,17 @@ export default function App(){
         <div style={{display:'flex',alignItems:'center',gap:1}}>
           {[['home','Home'],['feed','Feed'],['briefing','Briefing'],['watchlist','Watch'],['compare','Compare']].map(([p,l])=>(
             <button key={p} onClick={()=>setPage(p)}
-              style={{fontSize:10,color:page===p?'#888':'#1e1e1e',background:page===p?'rgba(255,255,255,.08)':'transparent',border:'none',cursor:'pointer',fontFamily:'monospace',padding:'6px 9px',borderRadius:4,letterSpacing:'0.05em',textTransform:'uppercase',transition:'all .12s',whiteSpace:'nowrap',WebkitTapHighlightColor:'transparent'}}>
+              style={{fontSize:15,color:page===p?'#888':'#1e1e1e',background:page===p?'rgba(255,255,255,.08)':'transparent',border:'none',cursor:'pointer',fontFamily:'monospace',padding:'6px 9px',borderRadius:4,letterSpacing:'0.05em',textTransform:'uppercase',transition:'all .12s',whiteSpace:'nowrap',WebkitTapHighlightColor:'transparent'}}>
               {l}
             </button>
           ))}
         </div>
         <div style={{display:'flex',alignItems:'center',gap:8}}>
           <button onClick={()=>setDark(d=>!d)}
-            style={{fontSize:10,color:dark?'#555':'#777',background:dark?'rgba(255,255,255,.06)':'rgba(0,0,0,.06)',border:`1px solid ${dark?'rgba(255,255,255,.1)':'rgba(0,0,0,.12)'}`,borderRadius:5,padding:'4px 12px',cursor:'pointer',fontFamily:'monospace',transition:'all .15s',WebkitTapHighlightColor:'transparent'}}>
+            style={{fontSize:15,color:dark?'#555':'#777',background:dark?'rgba(255,255,255,.06)':'rgba(0,0,0,.06)',border:`1px solid ${dark?'rgba(255,255,255,.1)':'rgba(0,0,0,.12)'}`,borderRadius:5,padding:'4px 12px',cursor:'pointer',fontFamily:'monospace',transition:'all .15s',WebkitTapHighlightColor:'transparent'}}>
             {dark?'light':'dark'}
           </button>
-          <span style={{fontSize:9,color:dark?'#333':'#aaa',fontFamily:'monospace',flexShrink:0}}>{timeStr}</span>
+          <span style={{fontSize:15,color:dark?'#333':'#aaa',fontFamily:'monospace',flexShrink:0}}>{timeStr}</span>
         </div>
       </div>
       {page==='home'&&<Homepage onLaunch={()=>setPage('feed')} dark={dark}/>}
